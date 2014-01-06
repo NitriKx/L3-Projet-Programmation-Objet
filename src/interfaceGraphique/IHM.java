@@ -118,12 +118,8 @@ public class IHM extends JFrame {
 						//recupere les phrases dites par l'element
 						dial=(s.getPhrase()==null)?"":" : "+s.getPhrase();
 						
-						//dessine une line et un trait 
-						g.drawLine(cx+4, cy+4, cx+10, cy-4);
-						g.drawLine(cx+10, cy-4, cx+18, cy-4);
-						
-						//affiche au dessus du point ses informations
-						g.drawString(s.afficher(), cx+20, cy);
+						// Dessine propremet les information relatives à un personnage
+						drawInformations(g, cx, cy, s);
 						
 						//affiche dans la fenetre a cote ses informations
 						jta.append(s.afficher()+dial+"\n");
@@ -144,6 +140,15 @@ public class IHM extends JFrame {
 			//affiche l'heure courante
 			g.setColor(Color.BLACK);
 			g.drawString(DateFormat.getTimeInstance().format(new Date()),rect.width-60,20);
+		}
+		
+		private void drawInformations(Graphics graphics, int cx, int cy, VueElement vueElement) {
+			// Dessine une line et un trait 
+			graphics.drawLine(cx+4, cy+4, cx+10, cy-4);
+			graphics.drawLine(cx+10, cy-4, cx+18, cy-4);
+			
+			// Affiche au dessus du point ses informations
+			graphics.drawString(vueElement.afficher(), cx+20, cy);
 		}
 	}
 	
