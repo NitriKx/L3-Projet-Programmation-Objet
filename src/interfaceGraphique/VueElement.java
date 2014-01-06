@@ -1,5 +1,7 @@
 package interfaceGraphique;
 
+import individu.Element;
+
 import java.awt.Point;
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -13,6 +15,7 @@ public final class VueElement implements Serializable {
 	private Point point;                               //position de l'element
 	private IConsole ctr;                              //controleur de l'element
 	private String phrase;                             //message communique par l'element
+	private Element element;
 	private int TTL=60*10;							   //duree de vie, max 10 minutes 
 
 	/**
@@ -21,12 +24,14 @@ public final class VueElement implements Serializable {
 	 * @param point la position initiale
 	 * @param c le controleur auquel l'element est associe
 	 * @param phrase le message a communiquer
+	 * @param element TODO
 	 */
-	public VueElement(int ref, Point point, IConsole c, String phrase) {
+	public VueElement(int ref, Point point, IConsole c, String phrase, Element element) {
 		this.ref = ref;
 		this.point = point;
 		this.ctr = c;
 		this.phrase = phrase;
+		this.element = element;
 	}
 
 	/**
@@ -35,12 +40,14 @@ public final class VueElement implements Serializable {
 	 * @param point la position initiale
 	 * @param c le controleur auquel l'element est associe
 	 * @param phrase le message a communiquer
+	 * @param element TODO
 	 * @param tTL le temps de vie
 	 */
-	public VueElement(int ref, Point point, IConsole c, String phrase, int tTL) {
+	public VueElement(int ref, Point point, IConsole c, String phrase, Element element, int tTL) {
 		this.ref = ref;
 		this.point = point;
 		this.ctr = c;
+		this.element = element;
 		TTL = tTL;
 	}
 
@@ -111,10 +118,25 @@ public final class VueElement implements Serializable {
 	}	
 	
 	/**
+	 * @return l'élément associé à la vue
+	 */
+	public Element getElement() {
+		return element;
+	}
+	
+	/**
+	 * 
+	 * @param element le nouvel element associé à la vue
+	 */
+	public void setElement(Element element) {
+		this.element = element;
+	}	
+
+	/**
 	 * Clone la representation courante de l'element
 	 */
 	public VueElement clone() {
-		return new VueElement( ref,  point, ctr, phrase, TTL);
+		return new VueElement( ref,  point, ctr, phrase, null, TTL);
 	}
 
 	/**
@@ -128,5 +150,6 @@ public final class VueElement implements Serializable {
 			e.printStackTrace();
 			return "";
 		}
-	}	
+	}
+
 }

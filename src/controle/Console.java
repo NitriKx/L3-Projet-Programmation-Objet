@@ -68,7 +68,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 			Naming.rebind("rmi://localhost:"+port+"/Console"+refRMI,this);
 			
 			//initialisation de la vue sur l'element
-			ve=new VueElement(refRMI, pos, this, "Atterrissage...");
+			ve=new VueElement(refRMI, pos, this, "Atterrissage...", elem);
 						
 			//connexion au serveur
 			((IArene) serveur).connect(ve);
