@@ -19,7 +19,7 @@ public abstract class Personnage extends Element implements ICombattant {
 	private int vitesse;
 	private int argent;
 	
-	private final String element_image_filename = "personnage.png";
+	private final String ELEMENT_IMG_FILENAME = "personnage.png";
 	
 	/**
 	 * @param nom

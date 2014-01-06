@@ -1,5 +1,7 @@
 package interfaceGraphique;
 
+import individu.Element;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -7,6 +9,9 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.rmi.Naming;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -15,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JFrame;
@@ -38,6 +44,7 @@ public class IHM extends JFrame {
 	private boolean cnxError = false;                                 //erreur de connexion
 	private ArrayList<VueElement> world=new ArrayList<VueElement>();  //liste de tous les elements connectes a l'interface
 	
+	private static final String ELEMENT_IMG_BASE_DIRECTORY = "assets/img";
 	
 	private class AreneJTextArea extends JTextArea {
 
@@ -112,14 +119,18 @@ public class IHM extends JFrame {
 						cx=s.getPoint().x*rect.width/100;
 						cy=s.getPoint().y*rect.height/100;
 						
-						//construis un oval aux coordonnes cx,cy de taille 8 x 8
-						g.fillOval(cx,cy,8,8);
-						
 						//recupere les phrases dites par l'element
 						dial=(s.getPhrase()==null)?"":" : "+s.getPhrase();
 						
 						// Dessine propremet les information relatives à un personnage
-						drawInformations(g, cx, cy, s);
+						drawInformations(g, cx, cy, s, vueElementColor);
+						
+						try {
+							drawImageForElement(g, cx, cy, s);
+						} catch (IOException e) {
+							//construis un oval aux coordonnes cx,cy de taille 8 x 8
+							g.fillOval(cx,cy,8,8);
+						}
 						
 						//affiche dans la fenetre a cote ses informations
 						jta.append(s.afficher()+dial+"\n");
@@ -142,13 +153,40 @@ public class IHM extends JFrame {
 			g.drawString(DateFormat.getTimeInstance().format(new Date()),rect.width-60,20);
 		}
 		
-		private void drawInformations(Graphics graphics, int cx, int cy, VueElement vueElement) {
-			// Dessine une line et un trait 
-			graphics.drawLine(cx+4, cy+4, cx+10, cy-4);
-			graphics.drawLine(cx+10, cy-4, cx+18, cy-4);
+		/**
+		 * Dessine l'image correspondant à un élément
+		 * @param graphics
+		 * @param cx
+		 * @param cy
+		 * @param vueElement
+		 * @throws IOException
+		 */
+		private void drawImageForElement(Graphics graphics, int cx, int cy, VueElement vueElement) throws IOException {
+			BufferedImage img = ImageIO.read(new File(ELEMENT_IMG_BASE_DIRECTORY + "/" + vueElement.getElement().getPictureFileName()));
+			graphics.drawImage(img, cx, cy, null);
+		}
+		
+		private void drawInformations(Graphics graphics, int cx, int cy, VueElement vueElement, Color vueElementColor) {
+			
+			
+			// Dessine un cadre autour de l'icône
+			graphics.setColor(Color.BLACK);
+			graphics.fillOval(cx-8, cy-8, 32, 32);
+			
+			graphics.setColor(Color.WHITE);
+			graphics.fillOval(cx-6, cy-6, 28, 28);
+			
+			graphics.setColor(vueElementColor);
+			
+			// Dessine une line et un trait (chaque image fait 16px par 16 px)
+			graphics.drawLine(cx+19, cy-4, cx+26, cy-11);
+			graphics.drawLine(cx+26, cy-11, cx+33, cy-11);
 			
 			// Affiche au dessus du point ses informations
-			graphics.drawString(vueElement.afficher(), cx+20, cy);
+			graphics.drawString(vueElement.afficher(), cx+36, cy-6);
+			
+			Element elem = vueElement.getElement();
+			
 		}
 	}
 	
