@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.ScrollPane;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
@@ -23,6 +24,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -235,11 +237,15 @@ public class IHM extends JFrame {
 		getContentPane().add(new AreneJPanel(ajta));
 		setVisible(true);
 		
+		// Le scroll pane possède maintenant une marge intérieur pour éviter que les images/dessins dépassent
+		JScrollPane scrollPane = new JScrollPane(ajta);
+		scrollPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		
 		//Fenetre qui affiche les messages des console
 		JFrame jf=new JFrame();
 		jf.setSize(size.width/4, size.height/4);
 		jf.setLocation(size.width*3/5, size.height/10);
-		jf.getContentPane().add(new JScrollPane(ajta));
+		jf.getContentPane().add(scrollPane);
 		jf.setTitle("Asteroide325 - Console");
 		jf.setVisible(true);
 	}
