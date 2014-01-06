@@ -14,7 +14,7 @@ public class Caracteristiques {
 	/**
 	 * Constructeur
 	 */
-	public Caracteristiques(String nom, int life, int attack, int defence, int speed, int money) {
+	public Caracteristiques(int life, int attack, int defence, int speed, int money) {
 		vie = life;
 		attaque = attack;
 		defense = defence;
