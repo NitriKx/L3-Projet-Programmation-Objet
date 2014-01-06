@@ -11,6 +11,11 @@ import java.util.ArrayList;
  *
  */
 public abstract class Personnage extends Element implements ICombattant {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 724457744388737246L;
+
 	private List<Integer> objets;
 	
 	// Capacité des personnages
@@ -18,18 +23,27 @@ public abstract class Personnage extends Element implements ICombattant {
 	private int attaque;
 	private int vitesse;
 	private int argent;
+	private int nbelement;
 	
+	/**
+	 * @return the nbelement
+	 */
+	public int getNbelement() {
+		return nbelement;
+	}
+
 	/**
 	 * @param nom
 	 * @param vie
 	 */
-	public Personnage(String nom, int vie, int attack, int def, int speed, int money) {
+	public Personnage(String nom, int vie, int attack, int def, int speed, int money, int nbel) {
 		super(nom, vie);
 		argent = money;
 		objets = new ArrayList<Integer>();
 		defense = def;
 		attaque = attack;
 		vitesse = speed;
+		nbelement = nbel;
 	}
 	
 	@Override
@@ -83,7 +97,7 @@ public abstract class Personnage extends Element implements ICombattant {
 	 * @see individu.ICombattant#ramasser(int)
 	 */
 	public void ramasser(int ref) {
-		objets.add(ref);
+		if (objets.size() < nbelement) objets.add(ref);
 	}
 
 	/**

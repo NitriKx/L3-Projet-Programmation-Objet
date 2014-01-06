@@ -9,8 +9,9 @@ public class TestIHM {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		// Placement des menus dans le menu-bar pour OS-X
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		
+
 		IHM ihm=new IHM();
 		ihm.connect();
 		//boucle infine, interrompue par l'utilisateur (IHM)

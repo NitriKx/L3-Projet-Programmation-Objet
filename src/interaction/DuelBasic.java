@@ -1,10 +1,12 @@
 package interaction;
 
+import individu.Element;
+import individu.Personnage;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import controle.IConsole;
-
 import serveur.Arene;
 
 public class DuelBasic implements IDuel {
@@ -30,18 +32,31 @@ public class DuelBasic implements IDuel {
 	 * Realise le combat 
 	 */
 	public int realiserCombat() throws RemoteException {
-		Remote ratt = this.getRefAttaquant();
-		IConsole catt = (IConsole) ratt;
-		int vieAtt = catt.getElement().getVie();
+		Remote rAtt = this.getRefAttaquant();
+		IConsole cAtt = (IConsole) rAtt;
+		Element elAtt = cAtt.getElement();
 		
-		Remote rdef = this.getRefDefenseur();	
-		IConsole cdef = (IConsole) rdef;
-		int vieDef = cdef.getElement().getVie();
+		Remote rDef = this.getRefDefenseur();	
+		IConsole cDef = (IConsole) rDef;
+		Element elDef = cDef.getElement();
 		
-		if(vieAtt < vieDef)
-			catt.perdreVie(1);
-		else
-			cdef.perdreVie(1);
+		if (elAtt instanceof Personnage && elDef instanceof Personnage) {
+			Personnage pAtt = (Personnage) elAtt;
+			Personnage pDef = (Personnage) elDef;
+			
+			if (Math.random()<0.8) {
+				cAtt.perdreVie(pertePDV(pAtt, pDef));
+			} else {
+				cDef.perdreVie(pertePDV(pDef, pAtt));
+			}
+		} else {
+			return 0;
+		}
+		
+//		if(vieAtt < vieDef)
+//			cAtt.perdreVie(1);
+//		else
+//			cDef.perdreVie(1);
 		
 		return 0;
 	}
@@ -53,6 +68,18 @@ public class DuelBasic implements IDuel {
 
 	public Remote getRefDefenseur() throws RemoteException {
 		return refDefenseur;
+	}
+	
+	private int pertePDV(Personnage attaquant, Personnage victime) {
+		float perte;
+		
+		perte = attaquant.getArgent() / 10;
+		perte *= attaquant.getAttaque();
+		perte /= victime.getDefense();
+		perte += 2;
+		perte += 5*Math.random();
+		
+		return (int) perte;
 	}
 
 }
