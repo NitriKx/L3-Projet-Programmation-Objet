@@ -23,18 +23,27 @@ public abstract class Personnage extends Element implements ICombattant {
 	private int attaque;
 	private int vitesse;
 	private int argent;
+	private int nbelement;
 	
+	/**
+	 * @return the nbelement
+	 */
+	public int getNbelement() {
+		return nbelement;
+	}
+
 	/**
 	 * @param nom
 	 * @param vie
 	 */
-	public Personnage(String nom, int vie, int attack, int def, int speed, int money) {
+	public Personnage(String nom, int vie, int attack, int def, int speed, int money, int nbel) {
 		super(nom, vie);
 		argent = money;
 		objets = new ArrayList<Integer>();
 		defense = def;
 		attaque = attack;
 		vitesse = speed;
+		nbelement = nbel;
 	}
 
 	/**
