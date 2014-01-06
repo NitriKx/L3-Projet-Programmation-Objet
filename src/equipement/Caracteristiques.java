@@ -1,6 +1,10 @@
 package equipement;
 
-public class Caracteristiques {
+import java.io.Serializable;
+
+public class Caracteristiques implements Serializable {
+	
+	private static final long serialVersionUID = -4333505248877226811L;
 	
 	/**
 	 * Caracteristiques
