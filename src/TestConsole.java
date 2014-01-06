@@ -1,3 +1,4 @@
+import individu.Assassin;
 import individu.Element;
 
 import java.rmi.RemoteException;
@@ -14,10 +15,10 @@ public class TestConsole {
 	 * @throws RemoteException 
 	 */
 	public static void main(String[] args) throws RemoteException {
-		Element babar = new Element("Babar");
-
+		Assassin ass1 = new Assassin();
+		
 		//Random r = new Random();
-		new Console(babar, 40, 40);
+		new Console(ass1, 40, 40);
 	}
 
 }
