@@ -239,7 +239,7 @@ public class IHM extends JFrame {
 		
 		// Le scroll pane possède maintenant une marge intérieur pour éviter que les images/dessins dépassent
 		JScrollPane scrollPane = new JScrollPane(ajta);
-		scrollPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		scrollPane.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 		
 		//Fenetre qui affiche les messages des console
 		JFrame jf=new JFrame();
