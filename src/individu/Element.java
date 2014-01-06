@@ -15,6 +15,7 @@ public class Element implements IElement, Serializable {
 	private String nom;                                                      //le nom de l'element
 	private int vie;                                                         //le nombre de vies de l'element
 	private ArrayList<Integer> elementsConnus = new ArrayList<Integer>();    //les references des elements avec lesquels on a joue
+	private final String element_image_filename = "element.png";
 	
 	/**
 	 * Constructeur
@@ -34,6 +35,10 @@ public class Element implements IElement, Serializable {
 	public Element(String nom, int vie) {
 		this.nom = nom;
 		this.vie = vie;
+	}
+	
+	public String getPictureFileName() {
+		return this.element_image_filename;
 	}
 
 	public String getNom() {
@@ -59,4 +64,5 @@ public class Element implements IElement, Serializable {
 	public String toString(){
 		return String.format("%s [%d]", this.getNom(), this.getVie());
 	}
+
 }

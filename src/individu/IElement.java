@@ -36,4 +36,10 @@ public interface IElement {
 	 * @return chaine de caractere contenant au moins le nom de l'element et le nombre de vies tel qu'il sera affiche sur l'interface graphique
 	 */
 	public String toString();
+	
+	/**
+	 * Renvoie le nom du fichier image représentant l'élément
+	 * @return chaine de caractère contenant le nom du fichier (relatif au dossier image)
+	 */
+	public String getPictureFileName();
 }
