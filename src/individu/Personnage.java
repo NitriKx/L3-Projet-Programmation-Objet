@@ -6,6 +6,8 @@ package individu;
 import java.util.List;
 import java.util.ArrayList;
 
+import equipement.Caracteristiques;
+
 /**
  * @author flemoal
  *
@@ -19,11 +21,13 @@ public abstract class Personnage extends Element implements ICombattant {
 	private List<Integer> objets;
 	
 	// Capacité des personnages
-	private int defense;
-	private int attaque;
-	private int vitesse;
-	private int argent;
+	private Caracteristiques caracterisques;
 	private int nbelement;
+	
+	@Override
+	public String getPictureFileName() {
+		return "personnage.png";
+	}
 	
 	/**
 	 * @return the nbelement
@@ -36,61 +40,29 @@ public abstract class Personnage extends Element implements ICombattant {
 	 * @param nom
 	 * @param vie
 	 */
-	public Personnage(String nom, int vie, int attack, int def, int speed, int money, int nbel) {
+	public Personnage(String nom, int vie, Caracteristiques propriete, int nbel) {
 		super(nom, vie);
-		argent = money;
 		objets = new ArrayList<Integer>();
-		defense = def;
-		attaque = attack;
-		vitesse = speed;
-		nbelement = nbel;
+		caracterisques = propriete;
 	}
-	
-	@Override
-	public String getPictureFileName() {
-		return "personnage.png";
-	}
+
 
 	/**
-	 * @return the defense
+	 * @return the caracterisques
 	 */
-	public int getDefense() {
-		return defense;
+	public Caracteristiques getCaracterisques() {
+		return caracterisques;
 	}
 
-	/**
-	 * @return the attaque
-	 */
-	public int getAttaque() {
-		return attaque;
-	}
-
-	/**
-	 * @return the vitesse
-	 */
-	public int getVitesse() {
-		return vitesse;
-	}
-
-	/**
-	 * @return the argent
-	 */
-	public int getArgent() {
-		return argent;
-	}
-
-	/* (non-Javadoc)
-	 * @see individu.ICombattant#gagner(int)
-	 */
 	public void gagner(int s) {
-		argent += s;
+		caracterisques.setArgent(caracterisques.getArgent() + s);;
 	}
 
 	/* (non-Javadoc)
 	 * @see individu.ICombattant#perdre(int)
 	 */
 	public void perdre(int s) {
-		argent -= s;
+		caracterisques.setArgent(caracterisques.getArgent() - s);;
 	}
 
 	/* (non-Javadoc)

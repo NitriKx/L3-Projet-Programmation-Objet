@@ -73,9 +73,9 @@ public class DuelBasic implements IDuel {
 	private int pertePDV(Personnage attaquant, Personnage victime) {
 		float perte;
 		
-		perte = attaquant.getArgent() / 10;
-		perte *= attaquant.getAttaque();
-		perte /= victime.getDefense();
+		perte = attaquant.getCaracterisques().getArgent() / 10;
+		perte *= attaquant.getCaracterisques().getAttaque();
+		perte /= victime.getCaracterisques().getDefense();
 		perte += 2;
 		perte += 5*Math.random();
 		

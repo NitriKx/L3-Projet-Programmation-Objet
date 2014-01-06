@@ -1,5 +1,4 @@
 import individu.Assassin;
-
 import java.rmi.RemoteException;
 
 import controle.Console;
@@ -14,10 +13,10 @@ public class TestConsole {
 	 * @throws RemoteException 
 	 */
 	public static void main(String[] args) throws RemoteException {
-		Assassin babar = new Assassin();
-
+		Assassin ass1 = new Assassin();
+		
 		//Random r = new Random();
-		new Console(babar, 40, 40);
+		new Console(ass1, 40, 40);
 	}
 
 }
