@@ -10,6 +10,13 @@ public abstract class Equipement extends Element {
 	private Caracteristiques carac;
 	
 	/**
+	 * retourne les caracteristiques
+	 */
+	public Caracteristiques getCarac() {
+		return carac;
+	}
+
+	/**
 	 * Constructeur Equipement
 	 */
 	public Equipement(String nom, Caracteristiques c) {
@@ -20,5 +27,7 @@ public abstract class Equipement extends Element {
 		carac.setVie(c.getVie());
 		carac.setVitesse(c.getVitesse());
 	}
+	
+	
 
 }
