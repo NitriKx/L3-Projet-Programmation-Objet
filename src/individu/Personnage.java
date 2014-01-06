@@ -11,6 +11,11 @@ import java.util.ArrayList;
  *
  */
 public abstract class Personnage extends Element implements ICombattant {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 724457744388737246L;
+
 	private List<Integer> objets;
 	
 	// Capacité des personnages
