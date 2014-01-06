@@ -21,11 +21,7 @@ public abstract class Equipement extends Element {
 	 */
 	public Equipement(String nom, Caracteristiques c) {
 		super(nom);
-		carac.setArgent(c.getArgent());
-		carac.setAttaque(c.getAttaque());
-		carac.setDefense(c.getDefense());
-		carac.setVie(c.getVie());
-		carac.setVitesse(c.getVitesse());
+		carac = new Caracteristiques(c.getArgent(), c.getAttaque(), c.getDefense(), c.getVie(), c.getVitesse());
 	}
 	
 	
