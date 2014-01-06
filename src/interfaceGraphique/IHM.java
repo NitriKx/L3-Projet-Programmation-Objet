@@ -104,8 +104,9 @@ public class IHM extends JFrame {
 						ref=s.getRef();
 						
 						Random r=new Random(ref);
+						Color vueElementColor = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255), 200);
 						//calcule une couleur pour la representation
-						g.setColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255), 200));
+						g.setColor(vueElementColor);
 						
 						//recupere les coordonnes de l'element
 						cx=s.getPoint().x*rect.width/100;
@@ -117,8 +118,12 @@ public class IHM extends JFrame {
 						//recupere les phrases dites par l'element
 						dial=(s.getPhrase()==null)?"":" : "+s.getPhrase();
 						
+						//dessine une line et un trait 
+						g.drawLine(cx+4, cy+4, cx+10, cy-4);
+						g.drawLine(cx+10, cy-4, cx+18, cy-4);
+						
 						//affiche au dessus du point ses informations
-						g.drawString(s.afficher(), cx+10, cy);
+						g.drawString(s.afficher(), cx+20, cy);
 						
 						//affiche dans la fenetre a cote ses informations
 						jta.append(s.afficher()+dial+"\n");
