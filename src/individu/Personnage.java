@@ -92,7 +92,7 @@ public abstract class Personnage extends Element implements ICombattant {
 	 * @see individu.ICombattant#ramasser(int)
 	 */
 	public void ramasser(int ref) {
-		objets.add(ref);
+		if (objets.size() < nbelement) objets.add(ref);
 	}
 
 	/**
