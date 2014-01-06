@@ -13,4 +13,8 @@ public class Ninja extends Personnage {
 		super("Ninja", 70, new Caracteristiques(120, 16, 7, 4, 25), 4);
 	}
 
+	@Override
+	public String getPictureFileName() {
+		return "ninja.png";
+	}
 }

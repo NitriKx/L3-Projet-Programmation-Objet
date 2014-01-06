@@ -13,4 +13,8 @@ public class Mineur extends Personnage {
 		super("Mineur", 110, new Caracteristiques(130, 4, 9, 1, 45), 30);
 	}
 
+	@Override
+	public String getPictureFileName() {
+		return "mineur.png";
+	}
 }
