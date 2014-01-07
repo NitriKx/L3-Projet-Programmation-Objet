@@ -97,7 +97,7 @@ public class ConsoleEquipement extends UnicastRemoteObject implements IConsole {
 	 */
 	public void shutDown(String cause) throws RemoteException {
 		System.out.println("Console "+refRMI+" deconnectee : "+cause);
-//		System.exit(1);
+		System.exit(1);
 	}
 
 	public Element getElement() throws RemoteException {

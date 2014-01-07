@@ -123,7 +123,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 				
 				if (distPlusProche<=1) { 
 					//jeu
-					parler("Je joue avec "+refPlusProche);
+					parler("Je vais rammasser "+refPlusProche);
 					((IArene) serveur).ramasser(refRMI, refPlusProche);
 			
 				} else { 
