@@ -213,5 +213,9 @@ public class  Arene extends UnicastRemoteObject implements IArene, Runnable {
 		this.elements.remove(elem);
 	}
 
+	public int getPort() {
+		return port;
+	}
+
 
 }
