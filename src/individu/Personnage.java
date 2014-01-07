@@ -79,4 +79,8 @@ public abstract class Personnage extends Element implements ICombattant {
 	public List<Integer> getObjets() {
 		return objets;
 	}
+	
+	public boolean isFull() {
+		return objets.size()>=nbelement;
+	}
 }
