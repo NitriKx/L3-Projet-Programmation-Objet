@@ -90,7 +90,9 @@ public class IHM extends JFrame {
 		    int offX = (int)(p.x * d) - p.x;
 		    int offY = (int)(p.y * d) - p.y;
 		    setLocation(getLocation().x-offX,getLocation().y-offY);
-		    getParent().doLayout();
+//		    getParent().doLayout(); Méthode dépréciée
+		    getParent().validate();
+		    
 		}
 		
 		public Dimension getPreferredSize() {
