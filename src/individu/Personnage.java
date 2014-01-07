@@ -48,10 +48,11 @@ public abstract class Personnage extends Element implements ICombattant {
 
 
 	/**
+	 * met à jour les caractéristiques avec les objets de l'inventaire
 	 * @return the caracterisques
 	 */
 	public Caracteristiques getCaracterisques() {
-		return caracterisques;
+		return this.caracterisques;
 	}
 
 	public void gagner(int s) {
