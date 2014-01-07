@@ -41,75 +41,76 @@ public class Caracteristiques implements Serializable {
 	public Caracteristiques clone() {
 		return new Caracteristiques(this.vie, this.attaque, this.defense, this.vitesse, this.argent);
 	}
-	
+
 	/**
-	 * retourne la vie
+	 * @return the vie
 	 */
 	public int getVie() {
 		return vie;
 	}
-	
+
 	/**
-	 * pour modifier la vie
+	 * @param vie the vie to set
 	 */
-	public void setVie(int v) {
-		vie += v;
+	public void setVie(int vie) {
+		this.vie = vie;
 	}
 
 	/**
-	 * retourne l'attaque
+	 * @return the attaque
 	 */
 	public int getAttaque() {
 		return attaque;
 	}
-	
+
 	/**
-	 * pour modifier l'attaque
+	 * @param attaque the attaque to set
 	 */
-	public void setAttaque(int a) {
-		attaque += a;
+	public void setAttaque(int attaque) {
+		this.attaque = attaque;
 	}
 
 	/**
-	 * retourne la defense
+	 * @return the defense
 	 */
 	public int getDefense() {
 		return defense;
 	}
-	
+
 	/**
-	 * pour modifier la defense
+	 * @param defense the defense to set
 	 */
-	public void setDefense(int d) {
-		defense += d;
+	public void setDefense(int defense) {
+		this.defense = defense;
 	}
 
 	/**
-	 * retourne la vitesse
+	 * @return the vitesse
 	 */
 	public int getVitesse() {
 		return vitesse;
 	}
-	
+
 	/**
-	 * pour modifier la vitesse
+	 * @param vitesse the vitesse to set
 	 */
-	public void setVitesse(int v) {
-		vitesse += v;
+	public void setVitesse(int vitesse) {
+		this.vitesse = vitesse;
 	}
 
 	/**
-	 * retourne l'argent
+	 * @return the argent
 	 */
 	public int getArgent() {
 		return argent;
 	}
-	
+
 	/**
-	 * pour modifier l'argent
+	 * @param argent the argent to set
 	 */
-	public void setArgent(int a) {
-		argent += a;
+	public void setArgent(int argent) {
+		this.argent = argent;
 	}
+	
 	
 }
