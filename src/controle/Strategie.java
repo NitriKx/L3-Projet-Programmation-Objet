@@ -22,7 +22,7 @@ public class Strategie {
 	public static HashMap<Integer, HashMap<Integer,VueElement>> chercherElementProche(VueElement ve, Hashtable<Integer,VueElement> voisins){
 		HashMap<Integer, HashMap<Integer,VueElement>> resultat = new HashMap<Integer, HashMap<Integer,VueElement>>();
 		
-		int distPlusProche = Math.min(Arene.tailleAreneX, Arene.tailleAreneY);
+		int distPlusProche = Math.max(Arene.tailleAreneX, Arene.tailleAreneY);
 		int refPlusProche = 0;
 	
 		for(Integer ref:voisins.keySet()) {
@@ -46,7 +46,7 @@ public class Strategie {
 		// Enlever les personnages des voisins
 		for (Integer ref : voisins.keySet()) {
 			VueElement veTemp = voisins.get(ref);
-			if (veTemp.getElement() instanceof Equipement) {
+			if (Equipement.class.isAssignableFrom(veTemp.getElement().getClass())) {
 				voisinsEquip.put(ref, veTemp);
 			}
 		}
@@ -61,7 +61,7 @@ public class Strategie {
 		// Enlever les équipements des voisins
 		for (Integer ref : voisins.keySet()) {
 			VueElement veTemp = voisins.get(ref);
-			if (veTemp.getElement() instanceof Personnage) {
+			if (Personnage.class.isAssignableFrom(veTemp.getElement().getClass())) {
 				vonsinsPerso.put(ref, veTemp);
 			}
 		}
