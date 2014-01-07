@@ -71,7 +71,7 @@ public class IHM extends JFrame {
 		//Conteneur qui affiche l'arene de jeu
 		AreneJPanel(JTextArea jta) {
 			this.jta=jta;
-			
+			setMinimumSize(preferredSize);
 		    addMouseWheelListener(new MouseWheelListener() {
 		        public void mouseWheelMoved(MouseWheelEvent e) {
 		            updatePreferredSize(e.getWheelRotation(), e.getPoint());
@@ -281,7 +281,7 @@ public class IHM extends JFrame {
 //		Dimension size=kit.getScreenSize();
 //		setSize(size.width/2, size.height/2);
 		Dimension size=kit.getScreenSize();
-		setSize(400, 400);
+//		setSize(400, 400);
 		setLocation(size.width, size.height/4);
 		//setResizable(false);
 		
@@ -322,12 +322,13 @@ public class IHM extends JFrame {
 		file.add(exitAction);
 		m.add(file);
 		setJMenuBar(m);
-				
+		
 		//ajout de l'arene dans la fenetre
 		AreneJTextArea ajta=new AreneJTextArea();
 		AreneJPanel ajpl = new AreneJPanel(ajta);
 		
 		getContentPane().add(new JScrollPane(ajpl));
+		pack();
 		setVisible(true);
 		
 		//Fenetre qui affiche les messages des console
