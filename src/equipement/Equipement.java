@@ -26,7 +26,7 @@ public abstract class Equipement extends Element {
 	 */
 	public Equipement(String nom, Caracteristiques c) {
 		super(nom);
-		carac = new Caracteristiques(c.getArgent(), c.getAttaque(), c.getDefense(), c.getVie(), c.getVitesse());
+		carac = c;
 	}
 	
 	@Override
