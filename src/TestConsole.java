@@ -1,11 +1,13 @@
 import individu.Assassin;
 import individu.Barbare;
+import individu.Knight;
+import individu.Mineur;
+import individu.Ninja;
 
 import java.rmi.RemoteException;
 import java.util.Random;
 
 import serveur.Arene;
-
 import controle.Console;
 
 /**
@@ -22,7 +24,17 @@ public class TestConsole {
 		new Console(ass1, new Random().nextInt(Arene.tailleAreneX), new Random().nextInt(Arene.tailleAreneY));
 		
 		Barbare bar1 = new Barbare();
-		// new Console(bar1, new Random().nextInt(Arene.tailleAreneX), new Random().nextInt(Arene.tailleAreneY));
+		new Console(bar1, new Random().nextInt(Arene.tailleAreneX), new Random().nextInt(Arene.tailleAreneY));
+		
+		Mineur min = new Mineur();
+		new Console(min, new Random().nextInt(Arene.tailleAreneX), new Random().nextInt(Arene.tailleAreneY));
+		
+		Knight k = new Knight();
+		new Console(k, new Random().nextInt(Arene.tailleAreneX), new Random().nextInt(Arene.tailleAreneY));
+		
+		Ninja n = new Ninja();
+		new Console(n, new Random().nextInt(Arene.tailleAreneX), new Random().nextInt(Arene.tailleAreneY));
+		
 	}
 
 }
