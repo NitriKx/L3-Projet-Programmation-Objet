@@ -45,7 +45,8 @@ public abstract class Equipement extends Element {
 		bal += carac.getDefense();
 		bal += carac.getVie();
 		bal += carac.getVitesse();
-		return bal / (float) 20;
+		bal /= (float) 20;
+		return (bal < 0) ? 0 : ((bal > 1) ? 1 : bal);
 	}
 
 }

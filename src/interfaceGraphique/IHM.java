@@ -186,7 +186,7 @@ public class IHM extends JFrame {
 			graphics.setColor(Color.BLACK);
 			graphics.fillOval(cx-8, cy-8, 47, 47);
 			
-			graphics.setColor(Couleur.getBlendedColor(vueElement.getElement().getBalance() * 100));
+			graphics.setColor(Couleur.getBlendedColor(vueElement.getElement().getBalance()));
 			graphics.fillOval(cx-6, cy-6, 43, 43);
 			
 			// On dessine une légende si c'est un personnage (chaque image fait 32px par 32px)

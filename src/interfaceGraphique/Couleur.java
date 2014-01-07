@@ -8,7 +8,9 @@ public class Couleur {
 	private static final Color colMax = new Color( 90, 170, 50);
 	
 	
-	public static Color getBlendedColor (float percentage) {
+	public static Color getBlendedColor (float balance) {
+		float percentage = (balance < 0) ? 0 : ((balance > 1) ? 100 : balance * 100);
+		
 		if (percentage < 50) return interpolate(colMin, colMoy, percentage / (float) 50) ;
 		else return interpolate(colMoy, colMax, (percentage - 50) / (float) 50) ;
 	}
