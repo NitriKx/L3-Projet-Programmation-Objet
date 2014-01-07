@@ -16,13 +16,18 @@ public class ApparitionEquipements extends Thread {
 	private static final int limitConsecutiveErrorsWaintingTime = 10000;
 	
 	enum ListeEquipements {
+		ALCOOL,
 		BOTTES,
 		BOUCLIER,
+		BOULET,
+		BOURSEPERCEE,
 		CASQUE,
 		EPEE,
+		FIOLEDEPOISON,
 		MASSE,
 		PIECES,
-		POTION
+		POTION,
+		REDBULL
 	}
 	
 	public ApparitionEquipements(int intervalleApparitions) {
@@ -49,17 +54,29 @@ public class ApparitionEquipements extends Thread {
 				ListeEquipements equipementAFaireApparaitre = equipementPossibles[new Random().nextInt(equipementPossibles.length)];
 				Element element = null;
 				switch(equipementAFaireApparaitre) {
+				case ALCOOL :
+					element = new Alcool();
+					break;
 				case BOTTES :
 					element = new Bottes();
 					break;
 				case BOUCLIER :
 					element = new Bouclier();
 					break;
+				case BOULET :
+					element = new Boulet();
+					break;
+				case BOURSEPERCEE :
+					element = new BoursePercee();
+					break;
 				case CASQUE :
 					element = new Casque();
 					break;
 				case EPEE:
 					element = new Epee();
+					break;
+				case FIOLEDEPOISON :
+					element = new FioleDePoison();
 					break;
 				case MASSE :
 					element = new Masse();
@@ -69,6 +86,9 @@ public class ApparitionEquipements extends Thread {
 					break;
 				case POTION:
 					element = new Potion();
+					break;
+				case REDBULL :
+					element = new RedBull();
 					break;
 				default:
 					break;
