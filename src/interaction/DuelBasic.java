@@ -31,7 +31,7 @@ public class DuelBasic implements IDuel {
 	/**
 	 * Realise le combat 
 	 */
-	public int realiserCombat() throws RemoteException {
+	public void realiserCombat() throws RemoteException {
 		Remote rAtt = this.getRefAttaquant();
 		IConsole cAtt = (IConsole) rAtt;
 		Element elAtt = cAtt.getElement();
@@ -49,16 +49,7 @@ public class DuelBasic implements IDuel {
 			} else {
 				cDef.perdreVie(pertePDV(pDef, pAtt));
 			}
-		} else {
-			return 0;
 		}
-		
-//		if(vieAtt < vieDef)
-//			cAtt.perdreVie(1);
-//		else
-//			cDef.perdreVie(1);
-		
-		return 0;
 	}
 
 
