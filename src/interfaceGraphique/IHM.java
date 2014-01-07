@@ -6,8 +6,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
@@ -68,21 +70,24 @@ public class IHM extends JFrame {
 		}
 		
 		public void paintComponent(Graphics g) {
+			Graphics2D g2=(Graphics2D) g;
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			
 			//affiche l'arene comme un rectangle
 			Rectangle rect=this.getBounds();
 			
-			drawGridAndBackground(g);
+			drawGridAndBackground(g2);
 			
 			
 			
 			//si la connexion est en cours ou il y a une erreur
 			if ((state==State.INIT) || (cnxError)) {
-				g.setFont(new Font("Verdana",Font.BOLD,12));
+				g2.setFont(new Font("Verdana",Font.BOLD,12));
 				//affiche le message correspondant
 				if (!cnxError) 
-					g.drawString("Connexion en cours sur le serveur Arene...",20, rect.height-20);
+					g2.drawString("Connexion en cours sur le serveur Arene...",20, rect.height-20);
 				else 
-					g.drawString("Erreur de connexion !",20, rect.height-20);
+					g2.drawString("Erreur de connexion !",20, rect.height-20);
 				// g.setFont(of);
 				
 				//verifie si la connexion a ete realisee - isAlive (Thread)==true si on est en cours de connexion
@@ -128,13 +133,13 @@ public class IHM extends JFrame {
 						dial=(s.getPhrase()==null)?"":" : "+s.getPhrase();
 						
 						// Dessine propremet les information relatives à un personnage
-						drawInformationsAndElementBackground(g, (cx+ratioX/2)-16, (cy+ratioY/2)-16, s, true);
+						drawInformationsAndElementBackground(g2, (cx+ratioX/2)-16, (cy+ratioY/2)-16, s, true);
 						
 						try {
-							drawImageForElement(g, (cx+ratioX/2)-16, (cy+ratioY/2)-16, s);
+							drawImageForElement(g2, (cx+ratioX/2)-16, (cy+ratioY/2)-16, s);
 						} catch (IOException e) {
 							//construis un oval aux coordonnes cx,cy de taille 8 x 8
-							g.fillOval((cx+ratioX/2)-16,(cy+ratioY/2)-16,8,8);
+							g2.fillOval((cx+ratioX/2)-16,(cy+ratioY/2)-16,8,8);
 						}
 						
 						//affiche dans la fenetre a cote ses informations
@@ -154,8 +159,8 @@ public class IHM extends JFrame {
 			}
 			
 			//affiche l'heure courante
-			g.setColor(Color.BLACK);
-			g.drawString(DateFormat.getTimeInstance().format(new Date()),rect.width-60,20);
+			g2.setColor(Color.BLACK);
+			g2.drawString(DateFormat.getTimeInstance().format(new Date()),rect.width-60,20);
 		}
 		
 		/**
@@ -180,8 +185,7 @@ public class IHM extends JFrame {
 		 * @param vueElementColor
 		 * @param left
 		 */
-		private void drawInformationsAndElementBackground(Graphics graphics, int cx, int cy, VueElement vueElement, boolean right) {
-			
+		private void drawInformationsAndElementBackground(Graphics2D graphics, int cx, int cy, VueElement vueElement, boolean right) {
 			// Dessine un cadre autour de l'icône
 			graphics.setColor(Color.BLACK);
 			graphics.fillOval(cx-8, cy-8, 47, 47);
