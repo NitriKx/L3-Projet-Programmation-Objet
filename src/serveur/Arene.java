@@ -1,7 +1,6 @@
 package serveur;
 
 import individu.Element;
-import individu.Personnage;
 import interaction.DuelBasic;
 import interfaceGraphique.VueElement;
 
@@ -16,8 +15,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import controle.IConsole;
 import utilitaires.UtilitaireConsole;
+import controle.IConsole;
 
 
 /**
@@ -100,15 +99,24 @@ public class  Arene extends UnicastRemoteObject implements IArene, Runnable {
 		 * @param s vue (representation) de l'element 
 		 * @throws RemoteException
 		 */
-	public synchronized void connect(VueElement s) throws RemoteException {
+	public synchronized boolean connect(VueElement s) throws RemoteException {
 		try {
 			Remote r=Naming.lookup("rmi://localhost:"+port+"/Console"+s.getRef());
+			
+			// On vérifie si la case n'est pas occupée
+			for(VueElement ve : getWorld()) {
+				if(s.getPoint().equals(ve.getPoint())) {
+					return false;
+				}
+			}
+			
 			elements.put(r, s);
 		} catch (Exception e) {
 			System.out.println("Erreur lors de la connexion d'un client (ref="+s.getRef()+") :");
 			e.printStackTrace();
 		}
 		
+		return true;
 	}
 
 	/**
@@ -209,14 +217,13 @@ public class  Arene extends UnicastRemoteObject implements IArene, Runnable {
 			 
 			 ((IConsole) personne).ramasserObjet((IConsole) objet);
 			 ((IConsole) objet).perdreVie(2);
-		 } 
-		 catch (MalformedURLException e) {
-			 e.printStackTrace();
-		 } 
-		 catch (NotBoundException e) {
-			 e.printStackTrace();
-		 }
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			e.printStackTrace();
+		}
 	}
+
 	
 	/**
 	 * Supprime un element de la liste des elements connectes au serveur
@@ -229,6 +236,5 @@ public class  Arene extends UnicastRemoteObject implements IArene, Runnable {
 	public int getPort() {
 		return port;
 	}
-
-
+	
 }
