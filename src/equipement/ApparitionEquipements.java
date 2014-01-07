@@ -1,16 +1,11 @@
 package equipement;
 
 import individu.Element;
-import interfaceGraphique.VueElement;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.Random;
 
-import controle.ConsoleEquipement;
 import serveur.Arene;
+import controle.ConsoleEquipement;
 
 public class ApparitionEquipements extends Thread {
 	
@@ -68,13 +63,13 @@ public class ApparitionEquipements extends Thread {
 					break;
 				}
 				
-				ConsoleEquipement ce = new ConsoleEquipement(element, randomX, randomY);
+				new ConsoleEquipement(element, randomX, randomY);
 				
-				Thread.currentThread().sleep(this.intervalleApparitions);
+				Thread.sleep(this.intervalleApparitions);
 				
 			} catch(Exception e) {
 				System.out.println(e.getMessage());
-				try { Thread.currentThread().sleep(this.intervalleApparitions); } catch (InterruptedException e1) {}
+				try { Thread.sleep(this.intervalleApparitions); } catch (InterruptedException e1) {}
 			}
 		}
 	}

@@ -3,10 +3,15 @@ package equipement;
 public class Casque extends Equipement {
 	
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6270481893943928380L;
+
+	/**
 	 * Constructeur casque
 	 */
 	public Casque() {
-		super("casque", new Caracteristiques(0, 0, 20, 0, 0));
+		super("Casque", new Caracteristiques(0, 0, 20, 0, 0));
 	}
 
 	@Override
