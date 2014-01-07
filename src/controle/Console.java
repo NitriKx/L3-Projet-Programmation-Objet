@@ -143,6 +143,10 @@ public class Console extends UnicastRemoteObject implements IConsole {
 					//l'element courant se deplace vers le plus proche (s'il existe) sinon il erre
 					seDirigerVers(refPlusProche);
 				}
+			}else {
+				parler("J'erre et mon inventaire est plein");
+				//l'element courant se deplace vers le plus proche (s'il existe) sinon il erre
+				seDirigerVers(refPlusProche);
 			}
 		}
 	}
