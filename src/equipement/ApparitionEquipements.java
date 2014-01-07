@@ -47,21 +47,22 @@ public class ApparitionEquipements extends Thread {
 				element = new Bottes();
 				break;
 			case BOUCLIER :
-				element = new Bottes();
+				element = new Bouclier();
 				break;
 			case CASQUE :
-				element = new Bottes();
+				element = new Casque();
 				break;
 			case EPEE:
 				element = new Epee();
 				break;
 			case MASSE :
-				element = new Bottes();
+				element = new Masse();
 				break;
 			case PIECES :
-				element = new Bottes();
+				element = new Pieces();
 				break;
 			case POTION:
+				element = new Potion();
 				break;
 			default:
 				break;
