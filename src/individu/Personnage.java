@@ -24,7 +24,6 @@ public abstract class Personnage extends Element implements ICombattant {
 	// Capacité des personnages
 	private Caracteristiques caracterisques;
 	private int nbelement;
-	private int vie;
 	
 	@Override
 	public String getPictureFileName() {
@@ -48,8 +47,6 @@ public abstract class Personnage extends Element implements ICombattant {
 		
 		this.caracterisques = propriete;
 		this.nbelement = nbel;
-		this.vie=vie;
-		
 	}
 
 
@@ -76,8 +73,13 @@ public abstract class Personnage extends Element implements ICombattant {
 	 * @see individu.ICombattant#ramasser(int)
 	 */
 	public void ramasser(Equipement equi) {
-		if (objets.size() < nbelement) 
+		if (objets.size() < nbelement) {
 			objets.add(equi);
+			
+			setVie(getVie() + equi.getCarac().getVie());
+			caracterisques.addExceptLife(equi.getCarac());
+		}
+			
 	}
 
 	/**
