@@ -119,7 +119,8 @@ public class Console extends UnicastRemoteObject implements IConsole {
 			} else {
 				resultat = Strategie.chercherEquipementProche(ve, voisins);
 				distPlusProche = resultat.keySet().iterator().next();
-
+				refPlusProche =  resultat.get(distPlusProche).keySet().iterator().next();
+				
 				if (distPlusProche<=1) { 
 					//jeu
 					parler("Je joue avec "+refPlusProche);

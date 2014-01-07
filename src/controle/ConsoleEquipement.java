@@ -50,8 +50,8 @@ public class ConsoleEquipement extends UnicastRemoteObject implements IConsole {
 			this.refRMI=((IArene) serveur).allocateRef();
 			Naming.rebind("rmi://localhost:"+port+"/Console"+refRMI,this);
 			
-//			//initialisation de la vue sur l'element
-//			ve=new VueElement(refRMI, pos, this, "Atterrissage...", elem);
+			//initialisation de la vue sur l'element
+			ve=new VueElement(refRMI, new Point(dx, dy), this, "Atterrissage...", elem);
 						
 			//connexion au serveur
 			((IArene) serveur).connect(ve);
@@ -73,10 +73,6 @@ public class ConsoleEquipement extends UnicastRemoteObject implements IConsole {
 	public void run() throws RemoteException {
 		//decremente sa duree de vie
 		// ve.decrTTL(); 
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-		}
 	}
 	
 	/**
@@ -101,7 +97,7 @@ public class ConsoleEquipement extends UnicastRemoteObject implements IConsole {
 	 */
 	public void shutDown(String cause) throws RemoteException {
 		System.out.println("Console "+refRMI+" deconnectee : "+cause);
-		System.exit(1);
+//		System.exit(1);
 	}
 
 	public Element getElement() throws RemoteException {

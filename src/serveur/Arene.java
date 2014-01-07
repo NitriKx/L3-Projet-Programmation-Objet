@@ -1,6 +1,7 @@
 package serveur;
 
 import individu.Element;
+import individu.Personnage;
 import interaction.DuelBasic;
 import interfaceGraphique.VueElement;
 
@@ -16,7 +17,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 import controle.IConsole;
-
 import utilitaires.UtilitaireConsole;
 
 
@@ -203,6 +203,19 @@ public class  Arene extends UnicastRemoteObject implements IArene, Runnable {
 	}	
 	
 	public void ramasser(int ref, int ref2) throws RemoteException {
+		try {
+			 Remote personne = Naming.lookup("rmi://localhost:"+port+"/Console"+ref);
+			 Remote objet = Naming.lookup("rmi://localhost:"+port+"/Console"+ref2);
+			 
+			 ((Personnage) ((IConsole) personne).getElement()).ramasser(ref2);
+			 ((IConsole) objet).perdreVie(2);
+		 } 
+		 catch (MalformedURLException e) {
+			 e.printStackTrace();
+		 } 
+		 catch (NotBoundException e) {
+			 e.printStackTrace();
+		 }
 	}
 	
 	/**
