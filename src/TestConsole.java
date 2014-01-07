@@ -2,6 +2,9 @@ import individu.Assassin;
 import individu.Barbare;
 
 import java.rmi.RemoteException;
+import java.util.Random;
+
+import serveur.Arene;
 
 import controle.Console;
 
@@ -16,12 +19,10 @@ public class TestConsole {
 	 */
 	public static void main(String[] args) throws RemoteException {
 		Assassin ass1 = new Assassin();
-		//Random r = new Random();
-		new Console(ass1, 40, 40);
+		new Console(ass1, new Random().nextInt(Arene.tailleAreneX), new Random().nextInt(Arene.tailleAreneY));
 		
 		Barbare bar1 = new Barbare();
-		//Random r = new Random();
-		new Console(bar1, 70, 70);
+		// new Console(bar1, new Random().nextInt(Arene.tailleAreneX), new Random().nextInt(Arene.tailleAreneY));
 	}
 
 }
