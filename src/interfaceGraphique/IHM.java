@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -16,7 +17,6 @@ import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
@@ -70,7 +70,9 @@ public class IHM extends JFrame {
 			//affiche l'arene comme un rectangle
 			Rectangle rect=this.getBounds();
 			
-			drawGrid(g);
+			drawGridAndBackground(g);
+			
+			
 			
 			//si la connexion est en cours ou il y a une erreur
 			if ((state==State.INIT) || (cnxError)) {
@@ -100,7 +102,7 @@ public class IHM extends JFrame {
 					//mets a jour la liste des elements en vie sur l'arene
 					world=((IArene) serveur).getWorld();
 					
-					int ref,cx,cy;
+					int cx,cy;
 					String dial;
 					
 					//reinitialise l'affichage de l'arene
@@ -108,8 +110,6 @@ public class IHM extends JFrame {
 					
 					//pour chaque element en vie sur l'arene
 					for(VueElement s:world) {
-						//recupere sa reference
-						ref=s.getRef();
 						
 //						Random r=new Random(ref);
 //						Color vueElementColor = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255), 200);
@@ -189,7 +189,7 @@ public class IHM extends JFrame {
 			graphics.fillOval(cx-6, cy-6, 43, 43);
 			
 			// Dessine une line et un trait (chaque image fait 16px par 16 px)
-			graphics.setColor(Color.BLACK);
+			graphics.setColor(Color.WHITE);
 
 			graphics.drawLine(cx+28, cy-4, cx+34, cy-11);
 			graphics.drawLine(cx+34, cy-11, cx+42, cy-11);
@@ -201,11 +201,28 @@ public class IHM extends JFrame {
 			
 		}
 		
-		private void drawGrid(Graphics g) {
+		private void drawGridAndBackground(Graphics g) {
 			Rectangle rect=this.getBounds();
 			int widthCase = rect.width/Arene.tailleAreneX;
 			int heightCase = rect.height/Arene.tailleAreneY;
 			
+			// Draw the background
+			try {
+				Image background = ImageIO.read(new File(ELEMENT_IMG_BASE_DIRECTORY + "/floor.png"));
+				int backgroundWidth = background.getWidth(null);
+				int backgroundHeight = background.getHeight(null);
+				
+				for(int x = 0; x < rect.width; x += backgroundWidth) {
+					for(int y = 0; y < rect.height; y += backgroundHeight) {
+						g.drawImage(background, x, y, null);
+					}
+				}
+			} catch (IOException e) {
+				// In case of error the background will be the default one
+			}
+			
+			// Draw the grid
+			g.setColor(Color.GRAY);
 			for(int x = 0; x < rect.width; x += widthCase) {
 				g.drawLine(x, 0, x, rect.height);
 			}
@@ -267,7 +284,7 @@ public class IHM extends JFrame {
 		//ajout de l'arene dans la fenetre
 		AreneJTextArea ajta=new AreneJTextArea();
 		AreneJPanel ajpl = new AreneJPanel(ajta);
-		// ajpl.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+		ajpl.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 		
 		getContentPane().add(ajpl);
 		setVisible(true);
