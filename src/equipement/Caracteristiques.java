@@ -25,9 +25,13 @@ public class Caracteristiques implements Serializable {
 		vitesse = speed;
 		argent = money;
 	}
-	
+
 	public void add(Caracteristiques c) {
 		this.vie += c.vie;
+		this.addExceptLife(c);
+	}
+	
+	public void addExceptLife(Caracteristiques c) {
 		this.attaque += c.attaque;
 		this.defense += c.defense;
 		this.vitesse += c.vitesse;
