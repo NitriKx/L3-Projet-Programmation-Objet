@@ -1,6 +1,7 @@
 package controle;
 
 import individu.Element;
+import individu.Personnage;
 import interfaceGraphique.VueElement;
 
 import java.awt.Point;
@@ -116,14 +117,14 @@ public class Console extends UnicastRemoteObject implements IConsole {
 				parler("Je me dirige vers "+refPlusProche);
 				//l'element courant se deplace vers le plus proche (s'il existe) sinon il erre
 				seDirigerVers(refPlusProche);	
-			} else {
+			} else if (!((Personnage) getElement()).isFull()) {
 				resultat = Strategie.chercherEquipementProche(ve, voisins);
 				distPlusProche = resultat.keySet().iterator().next();
 				refPlusProche =  resultat.get(distPlusProche).keySet().iterator().next();
 				
 				if (distPlusProche<=1) { 
 					//jeu
-					parler("Je joue avec "+refPlusProche);
+					parler("Je vais ramasser "+refPlusProche);
 					((IArene) serveur).ramasser(refRMI, refPlusProche);
 			
 				} else { 
@@ -234,6 +235,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 	}
 	
 	public void ramasserObjet(IConsole objet) throws RemoteException {
+		parler("Je ramasse un objet !");
 	}
 	
 	public String afficher() throws RemoteException{

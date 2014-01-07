@@ -114,6 +114,7 @@ public class ConsoleEquipement extends UnicastRemoteObject implements IConsole {
 	
 
 	public void perdreVie(int viePerdue) throws RemoteException {
+		this.elem.setVie(this.elem.getVie()-viePerdue);
 	}
 	
 	public void ramasserObjet(IConsole objet) throws RemoteException {
