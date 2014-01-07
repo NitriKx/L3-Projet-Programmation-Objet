@@ -234,6 +234,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 	}
 	
 	public void ramasserObjet(IConsole objet) throws RemoteException {
+		parler("Je ramasse un objet !");
 	}
 	
 	public String afficher() throws RemoteException{
