@@ -9,4 +9,10 @@ public class Pieces extends Equipement {
 		super("pieces", new Caracteristiques(0, 0, 0, 0, 10));
 	}
 	
+
+	@Override
+	public String getPictureFileName() {
+		return "piece.png";
+	}
+	
 }

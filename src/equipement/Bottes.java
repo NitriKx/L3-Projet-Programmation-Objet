@@ -9,4 +9,9 @@ public class Bottes extends Equipement {
 		super("bottes", new Caracteristiques(0, 0, 0, 10, 0));
 	}
 	
+	@Override
+	public String getPictureFileName() {
+		return "bottes.png";
+	}
+	
 }

@@ -8,5 +8,10 @@ public class Epee extends Equipement {
 	public Epee() {
 		super("epee", new Caracteristiques(0, 10, 0, 0, 0));
 	}
-
+	
+	@Override
+	public String getPictureFileName() {
+		return "epee.png";
+	}
+	
 }

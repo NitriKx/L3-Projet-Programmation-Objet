@@ -8,5 +8,10 @@ public class Casque extends Equipement {
 	public Casque() {
 		super("casque", new Caracteristiques(0, 0, 20, 0, 0));
 	}
+
+	@Override
+	public String getPictureFileName() {
+		return "casque.png";
+	}
 	
 }
