@@ -3,11 +3,18 @@ package interaction;
 import individu.Element;
 import individu.Personnage;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
-import controle.IConsole;
 import serveur.Arene;
+import controle.ConsoleEquipement;
+import controle.IConsole;
+import equipement.Caracteristiques;
+import equipement.Equipement;
 
 public class DuelBasic implements IDuel {
 
@@ -64,13 +71,30 @@ public class DuelBasic implements IDuel {
 	private int pertePDV(Personnage attaquant, Personnage victime) {
 		float perte;
 		
-		perte = attaquant.getCaracterisques().getArgent() / 10;
-		perte *= attaquant.getCaracterisques().getAttaque();
-		perte /= victime.getCaracterisques().getDefense();
+		Caracteristiques caracAtt = null;
+		Caracteristiques caracVic = null;
+		try {
+			caracAtt = ajouterEffetObjets(attaquant.getCaracterisques().clone(), attaquant.getObjets());
+			caracVic = ajouterEffetObjets(victime.getCaracterisques().clone(), victime.getObjets());
+		} catch (Exception e) {
+			caracAtt = attaquant.getCaracterisques();
+			caracVic = victime.getCaracterisques();
+		}
+		
+		perte = caracAtt.getArgent() / 10;
+		perte *= caracAtt.getAttaque();
+		perte /= caracVic.getDefense();
 		perte += 2;
 		perte += 5*Math.random();
 		
 		return (int) perte;
 	}
-
+	
+	private Caracteristiques ajouterEffetObjets(Caracteristiques c, List<Integer> objets) throws MalformedURLException, RemoteException, NotBoundException {
+		for(Integer ref : objets) {
+			Equipement objet = (Equipement) ((ConsoleEquipement) Naming.lookup("rmi://localhost:"+arene.getPort()+"/Console"+ref)).getElement();
+			c.add(objet.getCarac());
+		}
+		return c;
+	}
 }

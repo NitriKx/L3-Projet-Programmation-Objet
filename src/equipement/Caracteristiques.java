@@ -26,6 +26,18 @@ public class Caracteristiques implements Serializable {
 		argent = money;
 	}
 	
+	public void add(Caracteristiques c) {
+		this.vie += c.vie;
+		this.attaque += c.attaque;
+		this.defense += c.defense;
+		this.vitesse += c.vitesse;
+		this.argent += c.argent;
+	}
+	
+	public Caracteristiques clone() {
+		return new Caracteristiques(this.vie, this.attaque, this.defense, this.vitesse, this.argent);
+	}
+	
 	/**
 	 * retourne la vie
 	 */
