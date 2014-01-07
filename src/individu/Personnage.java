@@ -83,7 +83,7 @@ public abstract class Personnage extends Element implements ICombattant {
 	/**
 	 * @return the objets
 	 */
-	public List<Integer> getObjets() {
+	public List<Equipement> getObjets() {
 		return objets;
 	}
 	

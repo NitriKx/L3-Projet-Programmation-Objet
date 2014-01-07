@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Random;
 
+import equipement.Equipement;
 import serveur.Arene;
 import serveur.IArene;
 import utilitaires.UtilitaireConsole;
@@ -236,6 +237,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 	
 	public void ramasserObjet(IConsole objet) throws RemoteException {
 		parler("Je ramasse un objet !");
+		((Personnage) getElement()).ramasser((Equipement) objet.getElement()); 
 	}
 	
 	public String afficher() throws RemoteException{

@@ -1,5 +1,7 @@
 package individu;
 
+import equipement.Equipement;
+
 public interface ICombattant {
 
 	/**
@@ -18,5 +20,5 @@ public interface ICombattant {
 	 * Mets a jour la liste des objets ramasses par le combattant
 	 * @param ref la reference (serveur) d'un equipement a ramasser
 	 */
-	public void ramasser(int ref);
+	public void ramasser(Equipement equi);
 }

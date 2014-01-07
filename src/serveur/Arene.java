@@ -207,7 +207,7 @@ public class  Arene extends UnicastRemoteObject implements IArene, Runnable {
 			 Remote personne = Naming.lookup("rmi://localhost:"+port+"/Console"+ref);
 			 Remote objet = Naming.lookup("rmi://localhost:"+port+"/Console"+ref2);
 			 
-			 ((Personnage) ((IConsole) personne).getElement()).ramasser(ref2);
+			 ((IConsole) personne).ramasserObjet((IConsole) objet);
 			 ((IConsole) objet).perdreVie(2);
 		 } 
 		 catch (MalformedURLException e) {

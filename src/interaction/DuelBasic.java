@@ -73,13 +73,9 @@ public class DuelBasic implements IDuel {
 		
 		Caracteristiques caracAtt = null;
 		Caracteristiques caracVic = null;
-		try {
-			caracAtt = ajouterEffetObjets(attaquant.getCaracterisques().clone(), attaquant.getObjets());
-			caracVic = ajouterEffetObjets(victime.getCaracterisques().clone(), victime.getObjets());
-		} catch (Exception e) {
-			caracAtt = attaquant.getCaracterisques();
-			caracVic = victime.getCaracterisques();
-		}
+		caracAtt = ajouterEffetObjets(attaquant.getCaracterisques().clone(), attaquant.getObjets());
+		caracVic = ajouterEffetObjets(victime.getCaracterisques().clone(), victime.getObjets());
+
 		
 		perte = caracAtt.getArgent() / 10;
 		perte *= caracAtt.getAttaque();
@@ -90,9 +86,8 @@ public class DuelBasic implements IDuel {
 		return (int) perte;
 	}
 	
-	private Caracteristiques ajouterEffetObjets(Caracteristiques c, List<Integer> objets) throws MalformedURLException, RemoteException, NotBoundException {
-		for(Integer ref : objets) {
-			Equipement objet = (Equipement) ((ConsoleEquipement) Naming.lookup("rmi://localhost:"+arene.getPort()+"/Console"+ref)).getElement();
+	private Caracteristiques ajouterEffetObjets(Caracteristiques c, List<Equipement> objets) {
+		for(Equipement objet : objets) {
 			c.add(objet.getCarac());
 		}
 		return c;
