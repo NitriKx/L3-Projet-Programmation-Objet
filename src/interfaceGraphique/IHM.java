@@ -185,7 +185,7 @@ public class IHM extends JFrame {
 			graphics.setColor(Color.BLACK);
 			graphics.fillOval(cx-8, cy-8, 47, 47);
 			
-			graphics.setColor(Color.WHITE);
+			graphics.setColor(Couleur.getBlendedColor(vueElement.getElement().getBalance() * 100));
 			graphics.fillOval(cx-6, cy-6, 43, 43);
 			
 			// Dessine une line et un trait (chaque image fait 16px par 16 px)
