@@ -51,7 +51,7 @@ public class Strategie {
 		}
 		
 		// Chercher elements le plus proche avec voisins
-		return chercherElementProche(ve, voisins);
+		return chercherElementProche(ve, voisinsEquip);
 	}
 
 	public static HashMap<Integer, HashMap<Integer,VueElement>> chercherPersonnageProche(VueElement ve, Hashtable<Integer,VueElement> voisins){
@@ -66,6 +66,6 @@ public class Strategie {
 		}
 		
 		// Chercher elements le plus proche avec voisins
-		return chercherElementProche(ve, voisins);
+		return chercherElementProche(ve, vonsinsPerso);
 	}
 }

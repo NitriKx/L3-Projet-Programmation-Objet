@@ -98,7 +98,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 		
 		// Recherche du plus proche, sinon errer
 			
-		HashMap<Integer, HashMap<Integer,VueElement>> resultat = Strategie.chercherElementProche(ve, voisins);
+		HashMap<Integer, HashMap<Integer,VueElement>> resultat = Strategie.chercherPersonnageProche(ve, voisins);
 		int distPlusProche = resultat.keySet().iterator().next();
 		int refPlusProche =  resultat.get(distPlusProche).keySet().iterator().next();
 		//VueElement cible = resultat.get(distPlusProche).get(refPlusProche);
