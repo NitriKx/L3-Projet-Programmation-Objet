@@ -23,7 +23,6 @@ import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -196,16 +195,22 @@ public class IHM extends JFrame {
 				graphics.drawLine(cx+28, cy-4, cx+34, cy-11);
 				graphics.drawLine(cx+34, cy-11, cx+42, cy-11);
 				
-				// Affiche au dessus du point ses informations
+				// Affiche au dessus du point son nom
+				graphics.setFont(new Font("Verdana", Font.BOLD, 12));
 				graphics.drawString(vueElement.afficher(), cx+44, cy-6);
+				
+				// Affiche en dessous ses points de vie
+				graphics.setFont(new Font("Arial Black", Font.BOLD, 9));
+				graphics.setColor(Color.BLACK);
+				graphics.drawString("" + vueElement.getElement().getVie(), cx+6, cy+35);
 			}
 
 		}
 		
 		private void drawGridAndBackground(Graphics g) {
 			Rectangle rect=this.getBounds();
-			float widthCase = rect.width/Arene.tailleAreneX;
-			float heightCase = rect.height/Arene.tailleAreneY;
+			float widthCase = (float) rect.width/(float) Arene.tailleAreneX;
+			float heightCase = (float) rect.height/(float) Arene.tailleAreneY;
 			
 			// Draw the background
 			try {
@@ -224,12 +229,12 @@ public class IHM extends JFrame {
 			
 			// Draw the grid
 			g.setColor(Color.GRAY);
-			for(int x = 0; x < rect.width; x += widthCase) {
-				g.drawLine(x, 0, x, rect.height);
+			for(float x = 0; x < rect.width; x += widthCase) {
+				g.drawLine((int) x, 0, (int) x, rect.height);
 			}
 			
-			for(int y = 0; y < rect.height; y += heightCase) {
-				g.drawLine(0, y, rect.width, y);
+			for(float y = 0; y < rect.height; y += heightCase) {
+				g.drawLine(0, (int) y, rect.width, (int) y);
 			}
 			
 		}
@@ -285,7 +290,6 @@ public class IHM extends JFrame {
 		//ajout de l'arene dans la fenetre
 		AreneJTextArea ajta=new AreneJTextArea();
 		AreneJPanel ajpl = new AreneJPanel(ajta);
-		ajpl.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 		
 		getContentPane().add(ajpl);
 		setVisible(true);
