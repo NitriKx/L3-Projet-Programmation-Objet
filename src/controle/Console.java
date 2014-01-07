@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Random;
 
-
+import serveur.Arene;
 import serveur.IArene;
 import utilitaires.UtilitaireConsole;
 
@@ -142,7 +142,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 			if (pointErrance==null) {
 				//initialisation aleatoire
 				Random r=new Random();
-				pointErrance=new Point(r.nextInt(100), r.nextInt(100));
+				pointErrance=new Point(r.nextInt(Arene.tailleAreneX), r.nextInt(Arene.tailleAreneY));
 			}
 			//la cible devient le nouveau point d'errance
 			pvers=pointErrance;
