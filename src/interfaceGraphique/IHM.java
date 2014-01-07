@@ -1,7 +1,5 @@
 package interfaceGraphique;
 
-import individu.Element;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -32,6 +30,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import serveur.Arene;
 import serveur.IArene;
 
 public class IHM extends JFrame {
@@ -71,16 +70,17 @@ public class IHM extends JFrame {
 			//affiche l'arene comme un rectangle
 			Rectangle rect=this.getBounds();
 			
+			drawGrid(g);
+			
 			//si la connexion est en cours ou il y a une erreur
 			if ((state==State.INIT) || (cnxError)) {
-				Font of=g.getFont();
-				g.setFont(new Font("Arial",Font.BOLD,20));
+				g.setFont(new Font("Verdana",Font.BOLD,12));
 				//affiche le message correspondant
 				if (!cnxError) 
 					g.drawString("Connexion en cours sur le serveur Arene...",20, rect.height-20);
 				else 
 					g.drawString("Erreur de connexion !",20, rect.height-20);
-				g.setFont(of);
+				// g.setFont(of);
 				
 				//verifie si la connexion a ete realisee - isAlive (Thread)==true si on est en cours de connexion
 				if ((connection!=null) && (! connection.isAlive())) {
@@ -111,26 +111,29 @@ public class IHM extends JFrame {
 						//recupere sa reference
 						ref=s.getRef();
 						
-						Random r=new Random(ref);
-						Color vueElementColor = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255), 200);
-						//calcule une couleur pour la representation
-						g.setColor(vueElementColor);
+//						Random r=new Random(ref);
+//						Color vueElementColor = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255), 200);
+//						//calcule une couleur pour la representation
+//						g.setColor(vueElementColor);
 						
 						//recupere les coordonnes de l'element
-						cx=s.getPoint().x*rect.width/100;
-						cy=s.getPoint().y*rect.height/100;
+						int ratioX = rect.width/Arene.tailleAreneX;
+						int ratioY = rect.height/Arene.tailleAreneY;
+						
+						cx=s.getPoint().x*rect.width/Arene.tailleAreneX;
+						cy=s.getPoint().y*rect.height/Arene.tailleAreneY;
 						
 						//recupere les phrases dites par l'element
 						dial=(s.getPhrase()==null)?"":" : "+s.getPhrase();
 						
 						// Dessine propremet les information relatives à un personnage
-						drawInformations(g, cx, cy, s, vueElementColor, true);
+						drawInformations(g, (cx+ratioX/2)-16, (cy+ratioY/2)-16, s, true);
 						
 						try {
-							drawImageForElement(g, cx, cy, s);
+							drawImageForElement(g, (cx+ratioX/2)-16, (cy+ratioY/2)-16, s);
 						} catch (IOException e) {
 							//construis un oval aux coordonnes cx,cy de taille 8 x 8
-							g.fillOval(cx,cy,8,8);
+							g.fillOval((cx+ratioX/2)-16,(cy+ratioY/2)-16,8,8);
 						}
 						
 						//affiche dans la fenetre a cote ses informations
@@ -176,25 +179,40 @@ public class IHM extends JFrame {
 		 * @param vueElementColor
 		 * @param left
 		 */
-		private void drawInformations(Graphics graphics, int cx, int cy, VueElement vueElement, Color vueElementColor, boolean right) {
+		private void drawInformations(Graphics graphics, int cx, int cy, VueElement vueElement, boolean right) {
 			
 			// Dessine un cadre autour de l'icône
 			graphics.setColor(Color.BLACK);
-			graphics.fillOval(cx-8, cy-8, 32, 32);
+			graphics.fillOval(cx-8, cy-8, 47, 47);
 			
 			graphics.setColor(Color.WHITE);
-			graphics.fillOval(cx-6, cy-6, 28, 28);
-			
-			graphics.setColor(vueElementColor);
+			graphics.fillOval(cx-6, cy-6, 43, 43);
 			
 			// Dessine une line et un trait (chaque image fait 16px par 16 px)
-			graphics.drawLine(cx+19, cy-4, cx+26, cy-11);
-			graphics.drawLine(cx+26, cy-11, cx+33, cy-11);
+			graphics.setColor(Color.BLACK);
+
+			graphics.drawLine(cx+28, cy-4, cx+34, cy-11);
+			graphics.drawLine(cx+34, cy-11, cx+42, cy-11);
 			
 			// Affiche au dessus du point ses informations
-			graphics.drawString(vueElement.afficher(), cx+36, cy-6);
+			graphics.drawString(vueElement.afficher(), cx+44, cy-6);
 			
-			Element elem = vueElement.getElement();
+			// Element elem = vueElement.getElement();
+			
+		}
+		
+		private void drawGrid(Graphics g) {
+			Rectangle rect=this.getBounds();
+			int widthCase = rect.width/Arene.tailleAreneX;
+			int heightCase = rect.height/Arene.tailleAreneY;
+			
+			for(int x = 0; x < rect.width; x += widthCase) {
+				g.drawLine(x, 0, x, rect.height);
+			}
+			
+			for(int y = 0; y < rect.height; y += heightCase) {
+				g.drawLine(0, y, rect.width, y);
+			}
 			
 		}
 	}
@@ -249,7 +267,7 @@ public class IHM extends JFrame {
 		//ajout de l'arene dans la fenetre
 		AreneJTextArea ajta=new AreneJTextArea();
 		AreneJPanel ajpl = new AreneJPanel(ajta);
-		ajpl.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+		// ajpl.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 		
 		getContentPane().add(ajpl);
 		setVisible(true);
