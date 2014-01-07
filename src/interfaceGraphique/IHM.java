@@ -159,7 +159,7 @@ public class IHM extends JFrame {
 			}
 			
 			//affiche l'heure courante
-			g2.setColor(Color.BLACK);
+			g2.setColor(Color.WHITE);
 			g2.drawString(DateFormat.getTimeInstance().format(new Date()),rect.width-60,20);
 		}
 		
@@ -206,7 +206,7 @@ public class IHM extends JFrame {
 				// Affiche en dessous ses points de vie
 				graphics.setFont(new Font("Arial Black", Font.BOLD, 9));
 				graphics.setColor(Color.BLACK);
-				graphics.drawString("" + vueElement.getElement().getVie(), cx+6, cy+35);
+				graphics.drawString("" + vueElement.getElement().getVie(), cx+8 + (3 - ("" + vueElement.getElement().getVie()).length()), cy+35);
 			}
 
 		}
