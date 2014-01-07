@@ -9,4 +9,10 @@ public class Potion extends Equipement {
 		super("potion", new Caracteristiques(10, 0, 0, 0, 0));
 	}
 	
+
+	@Override
+	public String getPictureFileName() {
+		return "potion.png";
+	}
+	
 }

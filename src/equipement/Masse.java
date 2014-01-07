@@ -9,4 +9,9 @@ public class Masse extends Equipement {
 		super("masse", new Caracteristiques(0, 20, 0, 0, 0));
 	}
 	
+	@Override
+	public String getPictureFileName() {
+		return "masse.png";
+	}
+	
 }
