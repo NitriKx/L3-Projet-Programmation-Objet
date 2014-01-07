@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.ScrollPane;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
@@ -125,7 +124,7 @@ public class IHM extends JFrame {
 						dial=(s.getPhrase()==null)?"":" : "+s.getPhrase();
 						
 						// Dessine propremet les information relatives à un personnage
-						drawInformations(g, cx, cy, s, vueElementColor);
+						drawInformations(g, cx, cy, s, vueElementColor, true);
 						
 						try {
 							drawImageForElement(g, cx, cy, s);
@@ -168,8 +167,16 @@ public class IHM extends JFrame {
 			graphics.drawImage(img, cx, cy, null);
 		}
 		
-		private void drawInformations(Graphics graphics, int cx, int cy, VueElement vueElement, Color vueElementColor) {
-			
+		/**
+		 * 
+		 * @param graphics
+		 * @param cx
+		 * @param cy
+		 * @param vueElement
+		 * @param vueElementColor
+		 * @param left
+		 */
+		private void drawInformations(Graphics graphics, int cx, int cy, VueElement vueElement, Color vueElementColor, boolean right) {
 			
 			// Dessine un cadre autour de l'icône
 			graphics.setColor(Color.BLACK);
@@ -204,6 +211,13 @@ public class IHM extends JFrame {
 		//cree un titre de la fenetre
 		setTitle("IHM - Arene / UPS - Projet Prog");
 		
+		// On change l'icone de l'application
+		try {
+			setIconImage(ImageIO.read(new File(ELEMENT_IMG_BASE_DIRECTORY + "/icon.png")));
+		} catch (IOException e) {
+			// On ignore l'erreur - On aura l'icone de base
+		}
+		
 		//ajout une operation si le bouton de fermeture de la fenetre est clique
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -234,18 +248,17 @@ public class IHM extends JFrame {
 				
 		//ajout de l'arene dans la fenetre
 		AreneJTextArea ajta=new AreneJTextArea();
-		getContentPane().add(new AreneJPanel(ajta));
-		setVisible(true);
+		AreneJPanel ajpl = new AreneJPanel(ajta);
+		ajpl.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 		
-		// Le scroll pane possède maintenant une marge intérieur pour éviter que les images/dessins dépassent
-		JScrollPane scrollPane = new JScrollPane(ajta);
-		scrollPane.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+		getContentPane().add(ajpl);
+		setVisible(true);
 		
 		//Fenetre qui affiche les messages des console
 		JFrame jf=new JFrame();
 		jf.setSize(size.width/4, size.height/4);
 		jf.setLocation(size.width*3/5, size.height/10);
-		jf.getContentPane().add(scrollPane);
+		jf.getContentPane().add(new JScrollPane(ajta));
 		jf.setTitle("Asteroide325 - Console");
 		jf.setVisible(true);
 	}
