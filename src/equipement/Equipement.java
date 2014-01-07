@@ -29,9 +29,4 @@ public abstract class Equipement extends Element {
 		carac = new Caracteristiques(c.getArgent(), c.getAttaque(), c.getDefense(), c.getVie(), c.getVitesse());
 	}
 	
-	@Override
-	public String toString() {
-		return String.format("%s", this.getNom());
-	}
-
 }

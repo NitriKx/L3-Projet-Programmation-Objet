@@ -61,7 +61,7 @@ public class Element implements IElement, Serializable {
 	}
 
 	public String toString(){
-		return String.format("%s [%d]", this.getNom(), this.getVie());
+		return String.format("%s", this.getNom(), this.getVie());
 	}
 
 }
