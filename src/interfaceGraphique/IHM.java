@@ -248,7 +248,10 @@ public class IHM extends JFrame {
 				
 		//ajout de l'arene dans la fenetre
 		AreneJTextArea ajta=new AreneJTextArea();
-		getContentPane().add(new AreneJPanel(ajta));
+		AreneJPanel ajpl = new AreneJPanel(ajta);
+		ajpl.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+		
+		getContentPane().add(ajpl);
 		setVisible(true);
 		
 		//Fenetre qui affiche les messages des console
