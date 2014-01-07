@@ -32,8 +32,8 @@ public class  Arene extends UnicastRemoteObject implements IArene, Runnable {
 	private int compteur = 0 ;                             //nombre d'elements connectes au serveur
     private  Hashtable<Remote,VueElement> elements = null; //elements connectes au serveur
 	
-    public static final int tailleAreneY = 100;
-	public static final int tailleAreneX = 100;
+	public static final int tailleAreneX = 20;
+	public static final int tailleAreneY = 20;
     
 	/**
 	 * Constructeur 
