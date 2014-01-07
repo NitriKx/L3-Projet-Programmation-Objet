@@ -33,48 +33,49 @@ public class ApparitionEquipements extends Thread {
 	
 	@Override
 	public void run() {
-		
-		try {
-		
-			int randomX = (int)(Math.random() * Arene.tailleAreneX);	// on tire l'abscisse d'une position au hasard
-			int randomY = (int)(Math.random() * Arene.tailleAreneY);	// on tire l'ordonnee d'une position au hasard
-			
-			ListeEquipements equipementPossibles[] = ListeEquipements.values();
-			ListeEquipements equipementAFaireApparaitre = equipementPossibles[new Random().nextInt(equipementPossibles.length)];
-			Element element = null;
-			switch(equipementAFaireApparaitre) {
-			case BOTTES :
-				element = new Bottes();
-				break;
-			case BOUCLIER :
-				element = new Bouclier();
-				break;
-			case CASQUE :
-				element = new Casque();
-				break;
-			case EPEE:
-				element = new Epee();
-				break;
-			case MASSE :
-				element = new Masse();
-				break;
-			case PIECES :
-				element = new Pieces();
-				break;
-			case POTION:
-				element = new Potion();
-				break;
-			default:
-				break;
+		while (true) {
+			try {
+				
+				int randomX = (int)(Math.random() * Arene.tailleAreneX);	// on tire l'abscisse d'une position au hasard
+				int randomY = (int)(Math.random() * Arene.tailleAreneY);	// on tire l'ordonnee d'une position au hasard
+				
+				ListeEquipements equipementPossibles[] = ListeEquipements.values();
+				ListeEquipements equipementAFaireApparaitre = equipementPossibles[new Random().nextInt(equipementPossibles.length)];
+				Element element = null;
+				switch(equipementAFaireApparaitre) {
+				case BOTTES :
+					element = new Bottes();
+					break;
+				case BOUCLIER :
+					element = new Bouclier();
+					break;
+				case CASQUE :
+					element = new Casque();
+					break;
+				case EPEE:
+					element = new Epee();
+					break;
+				case MASSE :
+					element = new Masse();
+					break;
+				case PIECES :
+					element = new Pieces();
+					break;
+				case POTION:
+					element = new Potion();
+					break;
+				default:
+					break;
+				}
+				
+				ConsoleEquipement ce = new ConsoleEquipement(element, randomX, randomY);
+				
+				Thread.currentThread().sleep(this.intervalleApparitions);
+				
+			} catch(Exception e) {
+				System.out.println(e.getMessage());
+				try { Thread.currentThread().sleep(this.intervalleApparitions); } catch (InterruptedException e1) {}
 			}
-			
-			ConsoleEquipement ce = new ConsoleEquipement(element, randomX, randomY);
-			
-			Thread.sleep(this.intervalleApparitions);
-			
-		} catch(Exception e) {
-			System.out.println(e.getMessage());
-			try { Thread.sleep(this.intervalleApparitions); } catch (InterruptedException e1) {}
 		}
 	}
 
