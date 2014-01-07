@@ -8,10 +8,13 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -60,13 +63,38 @@ public class IHM extends JFrame {
 	}
 	
 	private class AreneJPanel extends JPanel {
-
+		private Dimension preferredSize = new Dimension(400, 400);
+		
 		private static final long serialVersionUID = 1L;
 		private JTextArea jta;
 		
 		//Conteneur qui affiche l'arene de jeu
 		AreneJPanel(JTextArea jta) {
 			this.jta=jta;
+			
+		    addMouseWheelListener(new MouseWheelListener() {
+		        public void mouseWheelMoved(MouseWheelEvent e) {
+		            updatePreferredSize(e.getWheelRotation(), e.getPoint());
+		        }
+		    });
+		}
+		
+		private void updatePreferredSize(int n, Point p) {
+		    double d = (double) n * 1.08;
+		    d = (n > 0) ? 1/d : -d;
+
+		    int w = (int) (getWidth() * d);
+		    int h = (int) (getHeight() * d);
+		    preferredSize.setSize(w, h);
+
+		    int offX = (int)(p.x * d) - p.x;
+		    int offY = (int)(p.y * d) - p.y;
+		    setLocation(getLocation().x-offX,getLocation().y-offY);
+		    getParent().doLayout();
+		}
+		
+		public Dimension getPreferredSize() {
+		    return preferredSize;
 		}
 		
 		public void paintComponent(Graphics g) {
@@ -248,8 +276,10 @@ public class IHM extends JFrame {
 		Toolkit kit=Toolkit.getDefaultToolkit();
 		
 		//personnalise et positionne la fenetre par rapport a l'ecran
+//		Dimension size=kit.getScreenSize();
+//		setSize(size.width/2, size.height/2);
 		Dimension size=kit.getScreenSize();
-		setSize(size.width/2, size.height/2);
+		setSize(400, 400);
 		setLocation(size.width, size.height/4);
 		//setResizable(false);
 		
@@ -295,7 +325,7 @@ public class IHM extends JFrame {
 		AreneJTextArea ajta=new AreneJTextArea();
 		AreneJPanel ajpl = new AreneJPanel(ajta);
 		
-		getContentPane().add(ajpl);
+		getContentPane().add(new JScrollPane(ajpl));
 		setVisible(true);
 		
 		//Fenetre qui affiche les messages des console
