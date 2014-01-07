@@ -114,11 +114,28 @@ public class Console extends UnicastRemoteObject implements IConsole {
 		else { 
 			if (refPlusProche!=0) {
 				parler("Je me dirige vers "+refPlusProche);
-			}
-			else parler("J'erre..."); 
+				//l'element courant se deplace vers le plus proche (s'il existe) sinon il erre
+				seDirigerVers(refPlusProche);	
+			} else {
+				resultat = Strategie.chercherEquipementProche(ve, voisins);
+				distPlusProche = resultat.keySet().iterator().next();
+
+				if (distPlusProche<=1) { 
+					//jeu
+					parler("Je joue avec "+refPlusProche);
+					((IArene) serveur).ramasser(refRMI, refPlusProche);
 			
-			//l'element courant se deplace vers le plus proche (s'il existe) sinon il erre
-			seDirigerVers(refPlusProche);	
+				} else { 
+					if (refPlusProche!=0) {
+						parler("Je me dirige vers "+refPlusProche);
+					}
+					else {
+						parler("J'erre..."); 
+					}
+					//l'element courant se deplace vers le plus proche (s'il existe) sinon il erre
+					seDirigerVers(refPlusProche);
+				}
+			}
 		}
 	}
 	
