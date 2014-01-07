@@ -54,13 +54,18 @@ public class ConsoleEquipement extends UnicastRemoteObject implements IConsole {
 			ve=new VueElement(refRMI, new Point(dx, dy), this, "Atterrissage...", elem);
 						
 			//connexion au serveur
-			((IArene) serveur).connect(ve);
+			if( ((IArene) serveur).connect(ve) == false) {
+				String message = "Impossible de placer l'élément : case occupée.";
+				System.out.println(message);
+				throw new RuntimeException(message);
+			} else {
+				//affiche message si succes
+				System.out.println("Console connectee ["+refRMI+"]");
+			}
 			
-			//affiche message si succes
-			System.out.println("Console connectee ["+refRMI+"]");
  		} catch (Exception e) {
   			System.out.println("Erreur : la console n'a pa pu etre creee !\nCause : "+e.getCause());
-  			e.printStackTrace();
+  			throw new RuntimeException(e);
  		}
 	}
 
