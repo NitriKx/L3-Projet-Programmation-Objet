@@ -12,7 +12,7 @@ public class Pieces extends Equipement {
 	 * Constructeur pieces
 	 */
 	public Pieces() {
-		super("Pieces", new Caracteristiques(0, 0, 0, 0, 10));
+		super("Pièces", new Caracteristiques(0, 0, 0, 0, 10));
 	}
 	
 
