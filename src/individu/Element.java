@@ -64,4 +64,8 @@ public class Element implements IElement, Serializable {
 		return String.format("%s [%d]", this.getNom(), this.getVie());
 	}
 
+	public float getBalance() {
+		return 1;
+	}
+
 }

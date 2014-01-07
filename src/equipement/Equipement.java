@@ -33,5 +33,19 @@ public abstract class Equipement extends Element {
 	public String toString() {
 		return String.format("%s", this.getNom());
 	}
+	
+	/**
+	 * Valeur entre 0 et 1 pour savoir si un objet est mauvais ou non
+	 * @return 0 mauvais / 1 bon
+	 */
+	public float getBalance() {
+		float bal = 10;
+		bal += carac.getArgent();
+		bal += carac.getAttaque();
+		bal += carac.getDefense();
+		bal += carac.getVie();
+		bal += carac.getVitesse();
+		return bal / (float) 20;
+	}
 
 }

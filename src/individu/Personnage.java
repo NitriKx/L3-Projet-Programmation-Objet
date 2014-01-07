@@ -90,6 +90,11 @@ public abstract class Personnage extends Element implements ICombattant {
 	}
 	
 	public boolean isFull() {
-		return objets.size()>=nbelement;
+		return objets.size() >= nbelement;
+	}
+	
+	public float getBalance() {
+		float vie = (getVie() < 0) ? 0 : ((getVie() > 100) ? 100 : getVie());
+		return vie / (float) 100;
 	}
 }
