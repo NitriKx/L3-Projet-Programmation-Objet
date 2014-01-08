@@ -11,7 +11,7 @@ public class Assassin extends Personne {
 	 * Constructeur Assassin
 	 */
 	public Assassin() {
-		super("T5Assassin", 100, 0, 0, 0);
+		super("T5Assassin", 30, 10, 40, 20);
 	}
 	
 	/**
