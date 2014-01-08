@@ -1,5 +1,7 @@
 package interfaceGraphique;
 
+import individu.Personne;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -225,7 +227,7 @@ public class IHM extends JFrame {
 		 */
 		private void drawImageForElement(Graphics graphics, int cx, int cy, VueElement vueElement) throws IOException {
 			BufferedImage img = ImageIO.read(new File(ELEMENT_IMG_BASE_DIRECTORY + "/" + ((IAfficheImage) vueElement.getControleur().getElement()).getPictureFileName()));
-			graphics.drawImage(img, cx, cy, null);
+			graphics.drawImage(img, cx, cy-1, null);
 		}
 		
 		/**
@@ -246,10 +248,12 @@ public class IHM extends JFrame {
 			graphics.setColor(Couleur.getBlendedColor(Balance.getBalance(vueElement.getControleur().getElement())));
 			graphics.fillOval(cx-6, cy-6, 43, 43);
 			
-			// Affiche en dessous ses points de vie
-			graphics.setFont(new Font("Arial Black", Font.BOLD, 9));
-			graphics.setColor(Color.BLACK);
-			graphics.drawString("" + vueElement.getControleur().getElement().getVie(), cx+8 + (3 - ("" + vueElement.getControleur().getElement().getVie()).length()), cy+35);
+			// Affiche en dessous ses points de vie si c'est une personne
+			if(Personne.class.isAssignableFrom(vueElement.getControleur().getElement().getClass())) {
+				graphics.setFont(new Font("Arial Black", Font.BOLD, 9));
+				graphics.setColor(Color.BLACK);
+				graphics.drawString("" + vueElement.getControleur().getElement().getVie(), cx+8 + (3 - ("" + vueElement.getControleur().getElement().getVie()).length()), cy+35);
+			}
 		}
 		
 		/**
@@ -267,7 +271,15 @@ public class IHM extends JFrame {
 			
 			// Affiche au dessus du point son nom
 			graphics.setFont(new Font("Verdana", Font.BOLD, 12));
-			graphics.drawString(vueElement.afficher(), cx+25, cy-4);
+			graphics.drawString(supprimerInformationEntreCrochetsFin(vueElement.afficher()), cx+25, cy-4);
+		}
+		
+		private String supprimerInformationEntreCrochetsFin(String descriptionObjet) {
+			int indexOfCorchet = descriptionObjet.indexOf("[");
+			if(indexOfCorchet < 0) {
+				return descriptionObjet;
+			} 
+			return descriptionObjet.substring(0, indexOfCorchet);
 		}
 		
 		/**
@@ -285,7 +297,7 @@ public class IHM extends JFrame {
 			
 			// Affiche au dessus du point son nom
 			graphics.setFont(new Font("Verdana", Font.BOLD, 12));
-			graphics.drawString(vueElement.afficher(), cx+44, cy-6);
+			graphics.drawString(supprimerInformationEntreCrochetsFin(vueElement.afficher()), cx+44, cy-6);
 		}
 		
 		/**
