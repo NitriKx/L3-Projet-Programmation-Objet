@@ -16,13 +16,13 @@ public class Balance {
 		} else if (Equipement.class.isAssignableFrom(el.getClass())) {
 			// Si c'est une personne
 			Equipement equi = (Equipement) el;
-			float bal = 50; // Malus maximal
+			float bal = 20; // Malus maximal
 			bal += equi.getBonusDefense();
 			bal += equi.getBonusEsquive();
 			bal += equi.getBonusForce();
 			bal += equi.getBonusInventaire();
 			bal += equi.getBonusVie();
-			bal /= 100; // Malus max + bonus max
+			bal /= 40; // Malus max + bonus max
 			return (bal < 0) ? 0 : ((bal > 1) ? 1 : bal);
 		} else {
 			// Si il s'agit juste d'un élément
