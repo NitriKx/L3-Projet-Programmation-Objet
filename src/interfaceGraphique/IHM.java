@@ -329,11 +329,13 @@ public class IHM extends JFrame {
 		
 		getContentPane().add(new JScrollPane(ajpl));
 		pack();
+		setMinimumSize(getSize());
 		setVisible(true);
 		
 		//Fenetre qui affiche les messages des console
 		JFrame jf=new JFrame();
 		jf.setSize(size.width/4, size.height/4);
+		jf.setMinimumSize(jf.getSize());
 		jf.setLocation(size.width*3/5, size.height/10);
 		jf.getContentPane().add(new JScrollPane(ajta));
 		jf.setTitle("Asteroide325 - Console");
