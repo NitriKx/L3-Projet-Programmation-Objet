@@ -345,7 +345,7 @@ public class IHM extends JFrame {
 //		setSize(size.width/2, size.height/2);
 		Dimension size=kit.getScreenSize();
 //		setSize(400, 400);
-		setLocation(size.width, size.height/4);
+		setLocation(size.width/4, size.height/4);
 		//setResizable(false);
 		
 		//cree un titre de la fenetre

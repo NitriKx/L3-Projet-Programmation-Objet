@@ -35,6 +35,10 @@ public class Arene extends UnicastRemoteObject implements IArene, Runnable {
 	private int compteur = 0 ;                             //nombre d'elements connectes au serveur
     private  Hashtable<Remote,VueElement> elements = null; //elements connectes au serveur
     private Hashtable<Integer,String> ipAddrConsoles = null; //repertoire des refRMI et leur adresses ip
+    //Attributs pour gerer l'apparition des objets de facon "ordonnee" et aleatoire
+    private int compteurEquipements = 0;
+    private Hashtable<Remote,VueElement> equipements = null;
+    private Hashtable<Integer,String> ipAddrConsolesEquipements = null;
     
 	/**
 	 * Constructeur 
@@ -48,7 +52,9 @@ public class Arene extends UnicastRemoteObject implements IArene, Runnable {
 		this.ipName = ipName;
 		Naming.rebind("rmi://"+this.ipName+":"+this.port+"/Arene",this);
 		elements = new Hashtable<Remote,VueElement>();
+		equipements = new Hashtable<Remote,VueElement>();
 		ipAddrConsoles = new Hashtable<Integer,String>();
+		ipAddrConsolesEquipements = new Hashtable<Integer,String>();
 		new Thread(this).start();
 	}
 	

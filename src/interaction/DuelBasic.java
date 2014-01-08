@@ -42,24 +42,25 @@ public class DuelBasic implements IDuel {
         IConsole cdef = (IConsole) rdef;
         
         int defDef = pdef.getDefense();
-        int esquiveDef = pdef.getEsquive()*(4/5);
+        int esc = pdef.getEsquive();
+        float esquiveDef = (esc*4)/5;
 
         Random r=new Random();
 
         int hasard=r.nextInt(100);
-        int forfait=(atqAtt / 10);  /* coup par dŽfaut */
+        int forfait=(atqAtt / 10);  /* coup par défaut */
         
         /* si on ne peut esquiver on applique l'attaque en fonction de la defense
          * sinon, on n'applique pas d'attaque*/
-        if (hasard>esquiveDef)
+        if ((float)hasard>esquiveDef)
         {
-        	/*On a pas rŽussi a esquiver */
+        	/*On a pas réussi a esquiver */
             if (defDef>atqAtt)
                 cdef.perdreVie(forfait);
             else
                 cdef.perdreVie(forfait+(atqAtt - ((90*defDef)/100)));
         }
-        else cdef.parler(": Nananre ! J'ai esquivŽ");
+        else cdef.parler(": Nananère ! J'ai esquivé");
             return 0;
         }
 
