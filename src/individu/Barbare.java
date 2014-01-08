@@ -1,7 +1,9 @@
 package individu;
 
+import interfaceGraphique.IAfficheImage;
 
-public class Barbare extends Personne {
+
+public class Barbare extends Personne implements IAfficheImage {
 
 	/**
 	 * 

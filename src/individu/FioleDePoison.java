@@ -1,6 +1,8 @@
 package individu;
 
-public class FioleDePoison extends Equipement {
+import interfaceGraphique.IAfficheImage;
+
+public class FioleDePoison extends Equipement implements IAfficheImage {
 	
 	/**
 	 * 

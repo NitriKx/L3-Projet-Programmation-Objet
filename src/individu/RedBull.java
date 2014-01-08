@@ -1,6 +1,8 @@
 package individu;
 
-public class RedBull extends Equipement {
+import interfaceGraphique.IAfficheImage;
+
+public class RedBull extends Equipement implements IAfficheImage {
 
 	/**
 	 * 

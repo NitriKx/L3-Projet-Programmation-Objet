@@ -1,6 +1,8 @@
 package individu;
 
-public class Bottes extends Equipement {
+import interfaceGraphique.IAfficheImage;
+
+public class Bottes extends Equipement implements IAfficheImage {
 	
 	/**
 	 * 

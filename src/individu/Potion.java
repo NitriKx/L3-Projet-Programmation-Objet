@@ -1,6 +1,8 @@
 package individu;
 
-public class Potion extends Equipement {
+import interfaceGraphique.IAfficheImage;
+
+public class Potion extends Equipement implements IAfficheImage {
 	
 	/**
 	 * 

@@ -1,6 +1,8 @@
 package individu;
 
-public class Alcool extends Equipement {
+import interfaceGraphique.IAfficheImage;
+
+public class Alcool extends Equipement implements IAfficheImage {
 	
 	/**
 	 * 

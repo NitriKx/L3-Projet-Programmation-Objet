@@ -1,7 +1,9 @@
 package individu;
 
+import interfaceGraphique.IAfficheImage;
 
-public class Assassin extends Personne {
+
+public class Assassin extends Personne implements IAfficheImage  {
 	/**
 	 * 
 	 */

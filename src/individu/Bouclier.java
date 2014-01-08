@@ -1,6 +1,8 @@
 package individu;
 
-public class Bouclier extends Equipement {
+import interfaceGraphique.IAfficheImage;
+
+public class Bouclier extends Equipement implements IAfficheImage {
 	
 	/**
 	 * 
