@@ -413,6 +413,7 @@ public class IHM extends JFrame {
 			public void run() {
 				try {
 					serveur=Naming.lookup("rmi://localhost:"+port+"/Arene");
+//					serveur=Naming.lookup("rmi://ouvea.edu.ups-tlse.fr:"+port+"/Arene");
 				} 
 				catch (Exception e) {
 					cnxError=true;
