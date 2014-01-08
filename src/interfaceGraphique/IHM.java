@@ -1,7 +1,5 @@
 package interfaceGraphique;
 
-import individu.Personne;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -101,6 +99,9 @@ public class IHM extends JFrame {
 		    return preferredSize;
 		}
 		
+		/**
+		 * 
+		 */
 		public void paintComponent(Graphics g) {
 			Graphics2D g2=(Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -166,12 +167,26 @@ public class IHM extends JFrame {
 						
 						// Dessine propremet les information relatives à un personnage
 						try {
-							drawInformationsAndElementBackground(g2, (cx+ratioX/2)-16, (cy+ratioY/2)-16, s, true);
-							drawImageForElement(g2, (cx+ratioX/2)-16, (cy+ratioY/2)-16, s);
+							
+							// Si c'est un élément qui implémente AfficheImage
+							if(s.getControleur().getElement() instanceof IAfficheImage) {
+								// Permet d'aligner les images au milieu des cases
+								int ajustementTailleImage = 16; 
+								drawElementBackground(g2, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage, s, true);
+								drawImageForElement(g2, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage, s);
+								drawInformationsImage(g2, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage, s);
+							} else {
+								int ajustementTailleImage = 4;
+								drawElementAsDot(g2, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage);
+								drawInformationsDot(g2, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage, s);
+							}
+							
 						} catch (IOException e) {
-							//construis un oval aux coordonnes cx,cy de taille 8 x 8
-							g2.fillOval((cx+ratioX/2)-16,(cy+ratioY/2)-16,8,8);
+							int ajustementTailleImage = 4;
+							drawElementAsDot(g2, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage);
 						}
+						
+						
 						
 						//affiche dans la fenetre a cote ses informations
 						jta.append(s.afficher()+dial+"\n");
@@ -192,6 +207,12 @@ public class IHM extends JFrame {
 			//affiche l'heure courante
 			g2.setColor(Color.WHITE);
 			g2.drawString(DateFormat.getTimeInstance().format(new Date()),rect.width-60,20);
+		}
+
+		private void drawElementAsDot(Graphics2D g2, int cx, int cy) {
+			//construis un oval aux coordonnes cx,cy de taille 8 x 8
+			g2.setColor(Color.LIGHT_GRAY);
+			g2.fillOval(cx, cy,8,8);
 		}
 		
 		/**
@@ -217,7 +238,7 @@ public class IHM extends JFrame {
 		 * @param left
 		 * @throws RemoteException 
 		 */
-		private void drawInformationsAndElementBackground(Graphics2D graphics, int cx, int cy, VueElement vueElement, boolean right) throws RemoteException {
+		private void drawElementBackground(Graphics2D graphics, int cx, int cy, VueElement vueElement, boolean right) throws RemoteException {
 			// Dessine un cadre autour de l'icône
 			graphics.setColor(Color.BLACK);
 			graphics.fillOval(cx-8, cy-8, 47, 47);
@@ -225,24 +246,52 @@ public class IHM extends JFrame {
 			graphics.setColor(Couleur.getBlendedColor(vueElement.getControleur().getElement().getBalance()));
 			graphics.fillOval(cx-6, cy-6, 43, 43);
 			
-			// On dessine une légende si c'est un personnage (chaque image fait 32px par 32px)
-			if(Personne.class.isAssignableFrom(vueElement.getControleur().getElement().getClass())) {
-				graphics.setColor(Color.WHITE);
-				graphics.drawLine(cx+28, cy-4, cx+34, cy-11);
-				graphics.drawLine(cx+34, cy-11, cx+42, cy-11);
-				
-				// Affiche au dessus du point son nom
-				graphics.setFont(new Font("Verdana", Font.BOLD, 12));
-				graphics.drawString(vueElement.afficher(), cx+44, cy-6);
-				
-				// Affiche en dessous ses points de vie
-				graphics.setFont(new Font("Arial Black", Font.BOLD, 9));
-				graphics.setColor(Color.BLACK);
-				graphics.drawString("" + vueElement.getControleur().getElement().getVie(), cx+8 + (3 - ("" + vueElement.getControleur().getElement().getVie()).length()), cy+35);
-			}
-
+			// Affiche en dessous ses points de vie
+			graphics.setFont(new Font("Arial Black", Font.BOLD, 9));
+			graphics.setColor(Color.BLACK);
+			graphics.drawString("" + vueElement.getControleur().getElement().getVie(), cx+8 + (3 - ("" + vueElement.getControleur().getElement().getVie()).length()), cy+35);
 		}
 		
+		/**
+		 * 
+		 * @param graphics
+		 * @param cx
+		 * @param cy
+		 * @param vueElement
+		 * @throws RemoteException
+		 */
+		private void drawInformationsDot(Graphics2D graphics, int cx, int cy, VueElement vueElement) throws RemoteException {
+			graphics.setColor(Color.WHITE);
+			graphics.drawLine(cx+6, cy, cx+10, cy-7);
+			graphics.drawLine(cx+10, cy-7, cx+20, cy-7);
+			
+			// Affiche au dessus du point son nom
+			graphics.setFont(new Font("Verdana", Font.BOLD, 12));
+			graphics.drawString(vueElement.afficher(), cx+25, cy-4);
+		}
+		
+		/**
+		 * 
+		 * @param graphics
+		 * @param cx
+		 * @param cy
+		 * @param vueElement
+		 * @throws RemoteException
+		 */
+		private void drawInformationsImage(Graphics2D graphics, int cx, int cy, VueElement vueElement) throws RemoteException {
+			graphics.setColor(Color.WHITE);
+			graphics.drawLine(cx+28, cy-4, cx+34, cy-11);
+			graphics.drawLine(cx+34, cy-11, cx+42, cy-11);
+			
+			// Affiche au dessus du point son nom
+			graphics.setFont(new Font("Verdana", Font.BOLD, 12));
+			graphics.drawString(vueElement.afficher(), cx+44, cy-6);
+		}
+		
+		/**
+		 * 
+		 * @param g
+		 */
 		private void drawGridAndBackground(Graphics g) {
 			Rectangle rect=this.getBounds();
 			float widthCase = (float) rect.width/(float) 100.0;
