@@ -13,7 +13,7 @@ public class Bottes extends Equipement implements IAfficheImage {
 	 * Constructeur bottes
 	 */
 	public Bottes() {
-		super("T5Bottes", 0, 0, 0, 10, 30/4);
+		super("T5Bottes", 0, 0, 0, 10, 0);
 	}
 	
 	@Override

@@ -13,7 +13,7 @@ public class Casque extends Equipement implements IAfficheImage {
 	 * Constructeur casque
 	 */
 	public Casque() {
-		super("T5Casque", 0, 20, 0, 0, 15);
+		super("T5Casque", 0, 20, 0, 0, 0);
 	}
 
 	@Override

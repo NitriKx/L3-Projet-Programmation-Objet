@@ -13,7 +13,7 @@ public class Bouclier extends Equipement implements IAfficheImage {
 	 * Constructeur bouclier
 	 */
 	public Bouclier() {
-		super("T5Bouclier", 0, 10, 0, 0, 30/4);
+		super("T5Bouclier", 0, 10, 0, 0, 0);
 	}
 
 	@Override

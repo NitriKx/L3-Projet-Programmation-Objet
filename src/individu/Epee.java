@@ -13,7 +13,7 @@ public class Epee extends Equipement implements IAfficheImage {
 	 * Constructeur épée
 	 */
 	public Epee() {
-		super("T5Epee", 10, 0, 0, 0, 30/4);
+		super("T5Epee", 10, 0, 0, 0, 0);
 	}
 	
 	@Override

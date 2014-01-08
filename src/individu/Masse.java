@@ -13,7 +13,7 @@ public class Masse extends Equipement implements IAfficheImage {
 	 * Constructeur masse
 	 */
 	public Masse() {
-		super("T5Masse", 20, 0, 0, 0, 15);
+		super("T5Masse", 20, 0, 0, 0, 0);
 	}
 	
 	@Override
