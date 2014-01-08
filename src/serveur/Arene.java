@@ -137,7 +137,7 @@ public class Arene extends UnicastRemoteObject implements IArene, Runnable {
 			    	ipAddrConsoles.put(s.getRef(),ipConsole);
 			    }
                 else
-                    ((IConsole) r).shutDown("Tu as trichŽ vilain garon! Tu es virŽ !");
+                    ((IConsole) r).shutDown("Tu as triché vilain garon! Tu es viré !");
 			    
 				
 				
@@ -215,6 +215,12 @@ public class Arene extends UnicastRemoteObject implements IArene, Runnable {
 		return elements.size();
 	}
 	
+	/**
+	 * Appele par le run de la console. Permet a l'attaquant (ref1) d'attaquer (executer une frappe) le defenseur (ref2).
+	 * Les regles de combat s'appliquent (en fonction de la force, de la defense et de l'esquive).
+	 * Les caracteristiques du defenseur sont mises a jour (pas d'impact sur attaquant)
+	 * Les deux protagonistes ajoutent leur adversaire dans les elements deja vus. 
+	 */
 	public void interaction(int ref1, int ref2) throws RemoteException {
 		
 		 try {
@@ -244,9 +250,14 @@ public class Arene extends UnicastRemoteObject implements IArene, Runnable {
 		 }
 	}	
 	
+	/**
+	 * Appele par le run de la console. Permet a l'element ref1 (Personne) de ramasser l'element ref2 (Equipement).
+	 * Si l'equipement est trop lourd, il n'est pas ramasse, mais ajoute aux elements deja vus.
+	 * Si l'equimement est ramasse, il modifie les caracteristiques de la personne.
+	 */
 	public void ramasser(int ref1, int ref2) throws RemoteException {
 		try {
-			//recupere l'attaquant et le defenseur
+			//recupere le combattant et l'objet
 			 int port1 = port+ref1;
 		     int port2 = port+ref2;
 		     String ip1 = ipAddrConsoles.get(ref1);
@@ -265,6 +276,8 @@ public class Arene extends UnicastRemoteObject implements IArene, Runnable {
 		    	 ((IConsole) objet).perdreVie(1);
 			
 		     }
+		   //ajoute l'objet avec lesquels on a joue dans la liste des elements connus
+			 ((IConsole) combattant).ajouterConnu(ref2);
 		} 
 		catch (MalformedURLException e) {
 			e.printStackTrace();

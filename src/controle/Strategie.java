@@ -1,11 +1,10 @@
 package controle;
 
-import interfaceGraphique.VueElement;
-
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.Hashtable;
 
+import interfaceGraphique.VueElement;
 import utilitaires.UtilitaireConsole;
 
 public class Strategie {
@@ -19,7 +18,7 @@ public class Strategie {
 	public static HashMap<Integer, HashMap<Integer,VueElement>> chercherElementProche(VueElement ve, Hashtable<Integer,VueElement> voisins){
 		HashMap<Integer, HashMap<Integer,VueElement>> resultat = new HashMap<Integer, HashMap<Integer,VueElement>>();
 		
-		int distPlusProche = Math.max(100, 100);
+		int distPlusProche = 100;
 		int refPlusProche = 0;
 	
 		for(Integer ref:voisins.keySet()) {

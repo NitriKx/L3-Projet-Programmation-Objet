@@ -121,28 +121,39 @@ public class Console extends UnicastRemoteObject implements IConsole {
 			//i le plus proche est a proximite
 			if (distPlusProche<=1) { //si la cible est un equipement
 				if(cible.getControleur().getElement() instanceof Equipement) {
-					//ramassage
-					parler("Je tente de ramasser un objet");
-					((IArene) serveur).ramasser(refRMI, refPlusProche);
-				}
-				else {
-					//si la cible est une personne
-					if(cible.getControleur().getElement() instanceof Personne) {
-						//jeu
-						parler("Je joue avec "+refPlusProche);
-						((IArene) serveur).interaction(refRMI, refPlusProche);
+					if (((Personne) elem).getInventaire() > 0) {
+						//ramassage
+						parler("Je tente de ramasser un objet");
+						((IArene) serveur).ramasser(refRMI, refPlusProche);
+					} else {
+						parler("Je ne peux pas ramasser");
+						seDirigerVers(0);
 					}
 				}
+				
+				//si la cible est une personne
+				if(cible.getControleur().getElement() instanceof Personne) {
+					//jeu
+					parler("Je joue avec "+refPlusProche);
+					((IArene) serveur).interaction(refRMI, refPlusProche);
+				}
+				
 			}
 			//sinon
 			else { 
 				if (refPlusProche!=0) {
-					parler("Je me dirige vers "+refPlusProche);
+					if (((Personne) elem).getInventaire() > 0) {
+						parler("Je me dirige vers "+refPlusProche);
+					}
+					else {
+						refPlusProche =0;
+						parler("Je ne vais pas me diriger vers l'objet");
+					}
 				}
 				else parler("J'erre..."); 
 			
 				//l'element courant se deplace vers le plus proche (s'il existe) sinon il erre
-				seDirigerVers(refPlusProche);	
+				seDirigerVers(refPlusProche);
 			}
 		}
 	}
@@ -240,6 +251,17 @@ public class Console extends UnicastRemoteObject implements IConsole {
 		System.out.println("Ouch, j'ai perdu " + viePerdue + " points de vie. Il me reste " + this.elem.getVie() + " points de vie.");		
 	}
 	
+	/**
+	 * Fonction auxiliaire pour calcul le bonus qqsoit la caracteristique
+	 */
+	public int valeurBonus(int initial, int bonus, int seuil){
+		int res;
+		if (initial+bonus>seuil) res= seuil;
+		else if (initial+bonus<0) res=0;
+		else res=initial+bonus;
+		return res;
+	}
+	
 	/** Appliquer l'effet d'avoir ramasse un objet */
 	public void ramasserObjet(IConsole objet) throws RemoteException {
 		int bonusForce,bonusDefense,bonusVie,bonusEsquive,bonusInventaire;
@@ -254,20 +276,14 @@ public class Console extends UnicastRemoteObject implements IConsole {
 		int vie = ((Personne)this.elem).getVie();
 		int esquive = ((Personne)this.elem).getEsquive();
 		int inventaire = ((Personne)this.elem).getInventaire();
-		//calcul du seuil
-		if (force+bonusForce>100) force=100; else force= force+bonusForce;
-		if (defense+bonusDefense>100) defense=100; else defense=defense+bonusDefense;
-		if (vie+bonusVie>100) vie=100; else vie=vie+bonusVie;
-		if (esquive+bonusEsquive>50) esquive=50; else esquive=esquive+bonusEsquive;
-		if (inventaire+bonusInventaire>100) inventaire=100; else inventaire=inventaire+bonusInventaire;
 		//application du bonus
-		((Personne)this.elem).setForce(force);
-		((Personne)this.elem).setDefense(defense);
-		((Personne)this.elem).setVie(vie);
-		((Personne)this.elem).setEsquive(esquive);
-		((Personne)this.elem).setInventaire(inventaire);
+		((Personne)this.elem).setForce(valeurBonus(force,bonusForce,100));
+		((Personne)this.elem).setDefense(valeurBonus(defense,bonusDefense,100));
+		((Personne)this.elem).setVie(valeurBonus(vie,bonusVie,100));
+		((Personne)this.elem).setEsquive(valeurBonus(esquive,bonusEsquive,50));
+		((Personne)this.elem).setInventaire(valeurBonus(inventaire,bonusInventaire,100));
 		//mise a jour de l'inventaire
-		((Personne)this.elem).setInventaire(inventaire - ((Equipement)(objet.getElement())).totalEffetInventaire()*3/4);
+		((Personne)this.elem).setInventaire(inventaire - ((Equipement)(objet.getElement())).totalEffetInventaire());
 		//mise a zero Equipement pour empecher double emploi
 		((Equipement)(objet.getElement())).setBonusForce(0);
 		((Equipement)(objet.getElement())).setBonusDefense(0);

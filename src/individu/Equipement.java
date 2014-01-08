@@ -99,7 +99,7 @@ public class Equipement extends Element {
 	public int totalEffetInventaire() {
 		int limiteInventaire = 0;
 		if (bonusForce >0) limiteInventaire+= bonusForce;
-		if (bonusDefense >0) limiteInventaire= bonusDefense;
+		if (bonusDefense >0) limiteInventaire+= bonusDefense;
 		if (bonusVie >0) limiteInventaire+= bonusVie;
 		if (bonusEsquive >0) limiteInventaire+= bonusEsquive;
 		if (bonusInventaire >0) limiteInventaire+= bonusInventaire;
