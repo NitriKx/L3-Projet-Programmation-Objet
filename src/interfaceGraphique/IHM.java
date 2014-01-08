@@ -401,7 +401,7 @@ public class IHM extends JFrame {
 		jf.setMinimumSize(jf.getSize());
 		jf.setLocation(size.width*3/5, size.height/10);
 		jf.getContentPane().add(new JScrollPane(ajta));
-		jf.setTitle("Asteroide325 - Console");
+		jf.setTitle("The Rectangle Ring");
 		jf.setVisible(true);
 	}
 	

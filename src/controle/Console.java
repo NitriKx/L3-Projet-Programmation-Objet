@@ -118,7 +118,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 			VueElement cible = resultat.get(distPlusProche).get(refPlusProche);
 			
 			
-			//i le plus proche est a proximite
+			// Si quelque chose est à côté du personnage
 			if (distPlusProche<=1) { //si la cible est un equipement
 				if(cible.getControleur().getElement() instanceof Equipement) {
 					if (((Personne) elem).getInventaire() >= ((Equipement) cible.getControleur().getElement()).totalEffetInventaire()) {
@@ -126,7 +126,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 						parler("Je tente de ramasser un objet");
 						((IArene) serveur).ramasser(refRMI, refPlusProche);
 					} else {
-						parler("Je ne peux pas ramasser");
+						parler("Je ne peux pas ramasser cet objet");
 						seDirigerVers(0);
 					}
 				}
@@ -139,18 +139,19 @@ public class Console extends UnicastRemoteObject implements IConsole {
 				}
 				
 			}
-			//sinon
+			
+			// Sinon regarder l'élément le plus proche
 			else {
+				
+				// Si il y a un équipement 
 				if(cible != null && cible.getControleur().getElement() instanceof Equipement) {
-					if (refPlusProche!=0) {
-						if (((Personne) elem).getInventaire() >= ((Equipement) cible.getControleur().getElement()).totalEffetInventaire()) {
-							parler("Je me dirige vers l'objet " + refPlusProche);
-							seDirigerVers(refPlusProche);
-						}
-						else {
-							parler("Je ne vais pas me diriger vers l'objet");
-							seDirigerVers(0);
-						}
+					if (((Personne) elem).getInventaire() >= ((Equipement) cible.getControleur().getElement()).totalEffetInventaire()) {
+						parler("Je me dirige vers l'objet " + refPlusProche);
+						seDirigerVers(refPlusProche);
+					}
+					else {
+						parler("Place insuffisante, inutile de se diriger vers cet objet");
+						seDirigerVers(0);
 					}
 				}
 
