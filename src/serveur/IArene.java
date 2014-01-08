@@ -25,10 +25,9 @@ public interface IArene extends Remote {
 	/**
 	 * Connexion d'un element au serveur
 	 * @param ve la vue de l'element a se connecter
-	 * @return 
 	 * @throws RemoteException
 	 */
-	boolean connect(VueElement ve) throws RemoteException;
+	void connect(VueElement ve, String ipConsole) throws RemoteException;
 	
 	/**
 	 * Calcule la liste de toutes les representations d'elements presentes dans l'arene. 

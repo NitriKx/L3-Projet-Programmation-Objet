@@ -1,4 +1,4 @@
-package equipement;
+package individu;
 
 public class Masse extends Equipement {
 	
@@ -11,7 +11,7 @@ public class Masse extends Equipement {
 	 * Constructeur masse
 	 */
 	public Masse() {
-		super("Masse", new Caracteristiques(0, 20, 0, 0, 0));
+		super("T5Masse", 0, 0, 0, 0, 0);
 	}
 	
 	@Override

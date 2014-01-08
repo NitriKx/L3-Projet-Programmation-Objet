@@ -1,6 +1,8 @@
 package serveur;
 
 import individu.Element;
+import individu.Personne;
+import individu.Equipement;
 import interaction.DuelBasic;
 import interfaceGraphique.VueElement;
 
@@ -15,8 +17,9 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import utilitaires.UtilitaireConsole;
 import controle.IConsole;
+
+import utilitaires.UtilitaireConsole;
 
 
 /**
@@ -24,26 +27,28 @@ import controle.IConsole;
  * En localhost pour l'instant
  *
  */
-public class  Arene extends UnicastRemoteObject implements IArene, Runnable {
+public class Arene extends UnicastRemoteObject implements IArene, Runnable {
 
 	private static final long serialVersionUID = 1L;
 	private int port;                                      //port a utiliser pour la connexion
+	private String ipName; 								   //nom de la machine hebergeant l'arene
 	private int compteur = 0 ;                             //nombre d'elements connectes au serveur
     private  Hashtable<Remote,VueElement> elements = null; //elements connectes au serveur
-	
-	public static final int tailleAreneX = 20;
-	public static final int tailleAreneY = 20;
+    private Hashtable<Integer,String> ipAddrConsoles = null; //repertoire des refRMI et leur adresses ip
     
 	/**
 	 * Constructeur 
 	 * @param port le port de connexion
+	 * @param ipName nom de la machine qui heberge l'arene 
 	 * @throws Exception
 	 */
-	public Arene(int port) throws Exception {
+	public Arene(int port, String ipName) throws Exception {
 		super();
 		this.port=port;
-		Naming.rebind("rmi://localhost:"+port+"/Arene",this);
-       	elements = new Hashtable<Remote,VueElement>();
+		this.ipName = ipName;
+		Naming.rebind("rmi://"+this.ipName+":"+this.port+"/Arene",this);
+		elements = new Hashtable<Remote,VueElement>();
+		ipAddrConsoles = new Hashtable<Integer,String>();
 		new Thread(this).start();
 	}
 	
@@ -92,32 +97,56 @@ public class  Arene extends UnicastRemoteObject implements IArene, Runnable {
 			} catch (Exception e) {e.getMessage();}
 		}
 	}
+	
+	/**
+	 * Verifie que les capacites soient positives et inferieures au seuil
+	 * @param r
+	 * @return
+	 * @throws RemoteException
+	 */
+	public boolean verif (Remote r) throws RemoteException {
+		Element e = ((IConsole) r).getElement();
+		            if (e instanceof Personne) {
+		            	Personne p = (Personne) e;
+		                if (p.getVie()>100)
+		                    return false;
+		                if (p.getAttaque()<0 || p.getDefense()<0 || p.getEsquive()<0 || p.getInventaire()<0)
+		                    return false;
+		                if (p.getAttaque()+p.getDefense()+p.getEsquive()+p.getInventaire()>100)
+		                    return false;
+		                if (p.getEsquive()>50)
+		                    return false;
+		            }
+		            return true;
+		        }
 
 	
 	 /** Associe ("connecte") la representation d'un element en y associant un Remote, ajoute la representation d'un element dans l'arene 
 		 * 	 * la synchro permet de garantir qu'on ne fait pas de nouvelle connection pdt un tour de jeu
 		 * @param s vue (representation) de l'element 
+		 * @param ipConsole adresse ip de la console qui se connecte
 		 * @throws RemoteException
 		 */
-	public synchronized boolean connect(VueElement s) throws RemoteException {
-		try {
-			Remote r=Naming.lookup("rmi://localhost:"+port+"/Console"+s.getRef());
-			
-			// On vérifie si la case n'est pas occupée
-			for(VueElement ve : getWorld()) {
-				if(s.getPoint().equals(ve.getPoint())) {
-					return false;
-				}
+	  public synchronized void connect(VueElement s, String ipConsole) throws RemoteException {
+			try {
+			    int portConsole = port+s.getRef(); //on associe un port unique a chaque console
+			    Remote r=Naming.lookup("rmi://"+ipConsole+":"+portConsole+"/Console"+s.getRef());
+			    if (verif(r)){
+                    elements.put(r, s);
+			    	System.out.println("connect: ref = "+s.getRef());
+			    	ipAddrConsoles.put(s.getRef(),ipConsole);
+			    }
+                else
+                    ((IConsole) r).shutDown("Tu as trichŽ vilain garon! Tu es virŽ !");
+			    
+				
+				
+			} catch (Exception e) {
+				System.out.println("Erreur lors de la connexion d'un client (ref="+s.getRef()+") :");
+				e.printStackTrace();
 			}
 			
-			elements.put(r, s);
-		} catch (Exception e) {
-			System.out.println("Erreur lors de la connexion d'un client (ref="+s.getRef()+") :");
-			e.printStackTrace();
 		}
-		
-		return true;
-	}
 
 	/**
 	 * appele par l'IHM pour afficher une representation de l'arene
@@ -186,13 +215,18 @@ public class  Arene extends UnicastRemoteObject implements IArene, Runnable {
 		return elements.size();
 	}
 	
-	public void interaction(int ref, int ref2) throws RemoteException {
+	public void interaction(int ref1, int ref2) throws RemoteException {
+		
 		 try {
 			 //recupere l'attaquant et le defenseur
-			 Remote attaquant = Naming.lookup("rmi://localhost:"+port+"/Console"+ref);
-			 Remote defenseur = Naming.lookup("rmi://localhost:"+port+"/Console"+ref2);
-			
-			 //cree le duel
+			 int port1 = port+ref1;
+		     int port2 = port+ref2;
+		     String ip1 = ipAddrConsoles.get(ref1);
+		     String ip2 = ipAddrConsoles.get(ref2);
+		     Remote attaquant = Naming.lookup("rmi://"+ip1+":"+port1+"/Console"+ref1);
+		     Remote defenseur = Naming.lookup("rmi://"+ip2+":"+port2+"/Console"+ref2);
+		     
+		     //cree le duel
 			 DuelBasic duel = new DuelBasic(this,(IConsole) attaquant, (IConsole) defenseur);
 			
 			 //realise combat
@@ -200,7 +234,7 @@ public class  Arene extends UnicastRemoteObject implements IArene, Runnable {
 			
 			 //ajout les elements avec lesquels on a joue dans la liste des elements connus
 			 ((IConsole) attaquant).ajouterConnu(ref2);
-			 ((IConsole) defenseur).ajouterConnu(ref);		
+			 ((IConsole) defenseur).ajouterConnu(ref1);		
 		 } 
 		 catch (MalformedURLException e) {
 			 e.printStackTrace();
@@ -210,20 +244,35 @@ public class  Arene extends UnicastRemoteObject implements IArene, Runnable {
 		 }
 	}	
 	
-	public void ramasser(int ref, int ref2) throws RemoteException {
+	public void ramasser(int ref1, int ref2) throws RemoteException {
 		try {
-			 Remote personne = Naming.lookup("rmi://localhost:"+port+"/Console"+ref);
-			 Remote objet = Naming.lookup("rmi://localhost:"+port+"/Console"+ref2);
-			 
-			 ((IConsole) personne).ramasserObjet((IConsole) objet);
-			 ((IConsole) objet).perdreVie(2);
-		} catch (MalformedURLException e) {
+			//recupere l'attaquant et le defenseur
+			 int port1 = port+ref1;
+		     int port2 = port+ref2;
+		     String ip1 = ipAddrConsoles.get(ref1);
+		     String ip2 = ipAddrConsoles.get(ref2);
+		     Remote combattant = Naming.lookup("rmi://"+ip1+":"+port1+"/Console"+ref1);
+		     Remote objet = Naming.lookup("rmi://"+ip2+":"+port2+"/Console"+ref2);
+			
+		     //tester l'objet avant de le ramasser...
+		     Element equip = ((IConsole)objet).getElement();
+		     Element personne = ((IConsole) combattant).getElement();
+		     if (((Equipement)equip).totalEffetInventaire()<=((Personne)personne).getInventaire()) {
+		    	 //ramasse l'objet
+		    	 ((IConsole) combattant).ramasserObjet((IConsole)objet);
+			
+		    	 //mets a jour l'etat de l'objet comme ramasse
+		    	 ((IConsole) objet).perdreVie(1);
+			
+		     }
+		} 
+		catch (MalformedURLException e) {
 			e.printStackTrace();
-		} catch (NotBoundException e) {
+		} 
+		catch (NotBoundException e) {
 			e.printStackTrace();
 		}
 	}
-
 	
 	/**
 	 * Supprime un element de la liste des elements connectes au serveur
@@ -233,8 +282,5 @@ public class  Arene extends UnicastRemoteObject implements IArene, Runnable {
 		this.elements.remove(elem);
 	}
 
-	public int getPort() {
-		return port;
-	}
-	
+
 }

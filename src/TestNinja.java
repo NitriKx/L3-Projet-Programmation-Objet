@@ -1,9 +1,9 @@
-import individu.*;
+import individu.Ninja;
+import interfaceGraphique.IHM;
 
 import java.rmi.RemoteException;
 import java.util.Random;
 
-import serveur.Arene;
 import controle.Console;
 
 /**
@@ -17,7 +17,7 @@ public class TestNinja {
 	 */
 	public static void main(String[] args) throws RemoteException {
 		Ninja n = new Ninja();
-		new Console(n, new Random().nextInt(Arene.tailleAreneX), new Random().nextInt(Arene.tailleAreneY));		
+		new Console(n, new Random().nextInt(IHM.tailleAreneX), new Random().nextInt(IHM.tailleAreneY), TestServeur.port);		
 	}
 
 }

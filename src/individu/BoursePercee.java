@@ -1,4 +1,4 @@
-package equipement;
+package individu;
 
 public class BoursePercee extends Equipement {
 
@@ -11,7 +11,7 @@ public class BoursePercee extends Equipement {
 	 * Constructeur bourse percée
 	 */
 	public BoursePercee() {
-		super("Bourse Percée", new Caracteristiques(0, 0, 0, 0, -10));
+		super("T5Bourse Percée", 0, 0, 0, 0, 0);
 	}
 	
 	@Override

@@ -1,9 +1,9 @@
-import individu.*;
+import individu.Assassin;
+import interfaceGraphique.IHM;
 
 import java.rmi.RemoteException;
 import java.util.Random;
 
-import serveur.Arene;
 import controle.Console;
 
 /**
@@ -17,7 +17,7 @@ public class TestAssassin {
 	 */
 	public static void main(String[] args) throws RemoteException {
 		Assassin ass1 = new Assassin();
-		new Console(ass1, new Random().nextInt(Arene.tailleAreneX), new Random().nextInt(Arene.tailleAreneY));		
+		new Console(ass1, new Random().nextInt(IHM.tailleAreneX), new Random().nextInt(IHM.tailleAreneY), TestServeur.port);		
 	}
 
 }

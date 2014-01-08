@@ -1,6 +1,5 @@
 package individu;
 
-import equipement.Equipement;
 
 public interface ICombattant {
 

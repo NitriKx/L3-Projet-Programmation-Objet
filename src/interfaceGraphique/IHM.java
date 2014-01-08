@@ -1,6 +1,6 @@
 package interfaceGraphique;
 
-import individu.Personnage;
+import individu.Personne;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -36,7 +36,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import serveur.Arene;
 import serveur.IArene;
 
 public class IHM extends JFrame {
@@ -49,6 +48,9 @@ public class IHM extends JFrame {
 	private Thread connection = null;                                 //thread de connexion au serveur
 	private boolean cnxError = false;                                 //erreur de connexion
 	private ArrayList<VueElement> world=new ArrayList<VueElement>();  //liste de tous les elements connectes a l'interface
+	
+	public static final int tailleAreneX = 100;
+	public static final int tailleAreneY = 100;
 	
 	private static final String ELEMENT_IMG_BASE_DIRECTORY = "assets/img";
 	
@@ -153,19 +155,18 @@ public class IHM extends JFrame {
 //						g.setColor(vueElementColor);
 						
 						//recupere les coordonnes de l'element
-						int ratioX = rect.width/Arene.tailleAreneX;
-						int ratioY = rect.height/Arene.tailleAreneY;
+						int ratioX = rect.width/tailleAreneX;
+						int ratioY = rect.height/tailleAreneY;
 						
-						cx=s.getPoint().x*rect.width/Arene.tailleAreneX;
-						cy=s.getPoint().y*rect.height/Arene.tailleAreneY;
+						cx=s.getPoint().x*rect.width/tailleAreneX;
+						cy=s.getPoint().y*rect.height/tailleAreneY;
 						
 						//recupere les phrases dites par l'element
 						dial=(s.getPhrase()==null)?"":" : "+s.getPhrase();
 						
 						// Dessine propremet les information relatives à un personnage
-						drawInformationsAndElementBackground(g2, (cx+ratioX/2)-16, (cy+ratioY/2)-16, s, true);
-						
 						try {
+							drawInformationsAndElementBackground(g2, (cx+ratioX/2)-16, (cy+ratioY/2)-16, s, true);
 							drawImageForElement(g2, (cx+ratioX/2)-16, (cy+ratioY/2)-16, s);
 						} catch (IOException e) {
 							//construis un oval aux coordonnes cx,cy de taille 8 x 8
@@ -202,7 +203,7 @@ public class IHM extends JFrame {
 		 * @throws IOException
 		 */
 		private void drawImageForElement(Graphics graphics, int cx, int cy, VueElement vueElement) throws IOException {
-			BufferedImage img = ImageIO.read(new File(ELEMENT_IMG_BASE_DIRECTORY + "/" + vueElement.getElement().getPictureFileName()));
+			BufferedImage img = ImageIO.read(new File(ELEMENT_IMG_BASE_DIRECTORY + "/" + vueElement.getControleur().getElement().getPictureFileName()));
 			graphics.drawImage(img, cx, cy, null);
 		}
 		
@@ -214,17 +215,18 @@ public class IHM extends JFrame {
 		 * @param vueElement
 		 * @param vueElementColor
 		 * @param left
+		 * @throws RemoteException 
 		 */
-		private void drawInformationsAndElementBackground(Graphics2D graphics, int cx, int cy, VueElement vueElement, boolean right) {
+		private void drawInformationsAndElementBackground(Graphics2D graphics, int cx, int cy, VueElement vueElement, boolean right) throws RemoteException {
 			// Dessine un cadre autour de l'icône
 			graphics.setColor(Color.BLACK);
 			graphics.fillOval(cx-8, cy-8, 47, 47);
 			
-			graphics.setColor(Couleur.getBlendedColor(vueElement.getElement().getBalance()));
+			graphics.setColor(Couleur.getBlendedColor(vueElement.getControleur().getElement().getBalance()));
 			graphics.fillOval(cx-6, cy-6, 43, 43);
 			
 			// On dessine une légende si c'est un personnage (chaque image fait 32px par 32px)
-			if(Personnage.class.isAssignableFrom(vueElement.getElement().getClass())) {
+			if(Personne.class.isAssignableFrom(vueElement.getControleur().getElement().getClass())) {
 				graphics.setColor(Color.WHITE);
 				graphics.drawLine(cx+28, cy-4, cx+34, cy-11);
 				graphics.drawLine(cx+34, cy-11, cx+42, cy-11);
@@ -236,15 +238,15 @@ public class IHM extends JFrame {
 				// Affiche en dessous ses points de vie
 				graphics.setFont(new Font("Arial Black", Font.BOLD, 9));
 				graphics.setColor(Color.BLACK);
-				graphics.drawString("" + vueElement.getElement().getVie(), cx+8 + (3 - ("" + vueElement.getElement().getVie()).length()), cy+35);
+				graphics.drawString("" + vueElement.getControleur().getElement().getVie(), cx+8 + (3 - ("" + vueElement.getControleur().getElement().getVie()).length()), cy+35);
 			}
 
 		}
 		
 		private void drawGridAndBackground(Graphics g) {
 			Rectangle rect=this.getBounds();
-			float widthCase = (float) rect.width/(float) Arene.tailleAreneX;
-			float heightCase = (float) rect.height/(float) Arene.tailleAreneY;
+			float widthCase = (float) rect.width/(float) 100.0;
+			float heightCase = (float) rect.height/(float) 100.0;
 			
 			// Draw the background
 			try {

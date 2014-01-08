@@ -1,4 +1,4 @@
-package equipement;
+package individu;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package equipement;
+package individu;
 
 public class Casque extends Equipement {
 	
@@ -11,7 +11,7 @@ public class Casque extends Equipement {
 	 * Constructeur casque
 	 */
 	public Casque() {
-		super("Casque", new Caracteristiques(0, 0, 20, 0, 0));
+		super("T5Casque", 0, 0, 0, 0, 0);
 	}
 
 	@Override

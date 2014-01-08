@@ -1,4 +1,4 @@
-package equipement;
+package individu;
 
 public class Alcool extends Equipement {
 	
@@ -11,7 +11,7 @@ public class Alcool extends Equipement {
 	 * Constructeur alcool
 	 */
 	public Alcool() {
-		super("Alcool", new Caracteristiques(0, 3, 0, -3, 0));
+		super("T5Alcool", 0, 0, 0, 0, 0);
 	}
 	
 	@Override

@@ -1,9 +1,9 @@
-import individu.*;
+import individu.Barbare;
+import interfaceGraphique.IHM;
 
 import java.rmi.RemoteException;
 import java.util.Random;
 
-import serveur.Arene;
 import controle.Console;
 
 /**
@@ -17,7 +17,7 @@ public class TestBarbare {
 	 */
 	public static void main(String[] args) throws RemoteException {
 		Barbare bar1 = new Barbare();
-		new Console(bar1, new Random().nextInt(Arene.tailleAreneX), new Random().nextInt(Arene.tailleAreneY));		
+		new Console(bar1, new Random().nextInt(IHM.tailleAreneX), new Random().nextInt(IHM.tailleAreneY), TestServeur.port);		
 	}
 
 }

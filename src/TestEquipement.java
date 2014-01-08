@@ -1,4 +1,4 @@
-import equipement.ApparitionEquipements;
+import individu.ApparitionEquipements;
 
 
 public class TestEquipement {

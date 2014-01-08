@@ -1,8 +1,7 @@
 package individu;
 
-import equipement.Caracteristiques;
 
-public class Barbare extends Personnage {
+public class Barbare extends Personne {
 
 	/**
 	 * 
@@ -13,7 +12,7 @@ public class Barbare extends Personnage {
 	 * Constructeur Barbare
 	 */
 	public Barbare() {
-		super("Barbare", 160, new Caracteristiques(200, 7, 14, 2, 5), 5);
+		super("T5Barbare", 100, 0, 0, 0);
 	}
 
 	/**

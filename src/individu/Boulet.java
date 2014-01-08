@@ -1,4 +1,4 @@
-package equipement;
+package individu;
 
 public class Boulet extends Equipement {
 
@@ -11,7 +11,7 @@ public class Boulet extends Equipement {
 	 * Constructeur boulet
 	 */
 	public Boulet() {
-		super("Boulet", new Caracteristiques(0, 0, 0, -5, 0));
+		super("T5Boulet", 0, 0, 0, 0, 0);
 	}
 	
 	@Override

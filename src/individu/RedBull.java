@@ -1,4 +1,4 @@
-package equipement;
+package individu;
 
 public class RedBull extends Equipement {
 
@@ -11,7 +11,7 @@ public class RedBull extends Equipement {
 	 * Constructeur red bull
 	 */
 	public RedBull() {
-		super("Red Bull", new Caracteristiques(0, 0, 0, 5, 0));
+		super("T5Red Bull", 0, 0, 0, 0, 0);
 	}
 	
 	@Override

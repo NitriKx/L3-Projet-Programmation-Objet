@@ -1,11 +1,11 @@
-package equipement;
+package individu;
 
-import individu.Element;
+
+import interfaceGraphique.IHM;
 
 import java.util.Random;
 
-import serveur.Arene;
-import controle.ConsoleEquipement;
+import controle.Console;
 
 public class ApparitionEquipements extends Thread {
 	
@@ -47,8 +47,8 @@ public class ApparitionEquipements extends Thread {
 					compteurErreur = 0;
 				}
 				
-				int randomX = (int)(Math.random() * Arene.tailleAreneX);	// on tire l'abscisse d'une position au hasard
-				int randomY = (int)(Math.random() * Arene.tailleAreneY);	// on tire l'ordonnee d'une position au hasard
+				int randomX = (int)(Math.random() * IHM.tailleAreneX);	// on tire l'abscisse d'une position au hasard
+				int randomY = (int)(Math.random() * IHM.tailleAreneY);	// on tire l'ordonnee d'une position au hasard
 				
 				ListeEquipements equipementPossibles[] = ListeEquipements.values();
 				ListeEquipements equipementAFaireApparaitre = equipementPossibles[new Random().nextInt(equipementPossibles.length)];
@@ -94,7 +94,7 @@ public class ApparitionEquipements extends Thread {
 					break;
 				}
 				
-				new ConsoleEquipement(element, randomX, randomY);
+				new Console(element, randomX, randomY, 5099);
 				compteurErreur = 0;
 				
 				Thread.sleep(this.intervalleApparitions);

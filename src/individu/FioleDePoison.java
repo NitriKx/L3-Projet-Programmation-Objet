@@ -1,4 +1,4 @@
-package equipement;
+package individu;
 
 public class FioleDePoison extends Equipement {
 	
@@ -11,7 +11,7 @@ public class FioleDePoison extends Equipement {
 	 * Constructeur fiole de poison
 	 */
 	public FioleDePoison() {
-		super("Fiole De Poison", new Caracteristiques(-5, 0, -5, 0, 0));
+		super("T5Fiole De Poison", 0, 0, 0, 0, 0);
 	}
 	
 	@Override

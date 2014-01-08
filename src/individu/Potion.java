@@ -1,4 +1,4 @@
-package equipement;
+package individu;
 
 public class Potion extends Equipement {
 	
@@ -11,7 +11,7 @@ public class Potion extends Equipement {
 	 * Constructeur potion
 	 */
 	public Potion() {
-		super("Potion", new Caracteristiques(10, 0, 0, 0, 0));
+		super("T5Potion", 0, 0, 0, 0, 0);
 	}
 	
 

@@ -9,20 +9,22 @@ import serveur.Arene;
  */
 public class TestServeur {
 
+	public static int port=5099;
+	
 	/**
 	 * @param args
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
 		
-		int port=5099;	//par defaut, port=5099
+			//par defaut, port=5099
 		if (args.length!=0) port=Integer.parseInt(args[0]);
 		
 		System.out.println("Creation du registre RMI sur le port "+port+"...");
 		java.rmi.registry.LocateRegistry.createRegistry(port);
 	    
 	    System.out.println("Creation du serveur sur le port "+port+"...");
-	    Arene server=new Arene(port);
+	    Arene server=new Arene(port, "127.0.0.1");
 	    
 	    while(true) {
 	    	System.out.println("[Arene sur "+InetAddress.getLocalHost().getCanonicalHostName()+":"+port+"] "

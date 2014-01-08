@@ -1,4 +1,4 @@
-package equipement;
+package individu;
 
 public class Pieces extends Equipement {
 	
@@ -12,7 +12,7 @@ public class Pieces extends Equipement {
 	 * Constructeur pieces
 	 */
 	public Pieces() {
-		super("Pièces", new Caracteristiques(0, 0, 0, 0, 10));
+		super("T5Pièces", 0, 0, 0, 0, 0);
 	}
 	
 

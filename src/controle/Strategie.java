@@ -1,15 +1,12 @@
 package controle;
 
-import individu.Personnage;
 import interfaceGraphique.VueElement;
 
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.Hashtable;
 
-import serveur.Arene;
 import utilitaires.UtilitaireConsole;
-import equipement.Equipement;
 
 public class Strategie {
 
@@ -22,7 +19,7 @@ public class Strategie {
 	public static HashMap<Integer, HashMap<Integer,VueElement>> chercherElementProche(VueElement ve, Hashtable<Integer,VueElement> voisins){
 		HashMap<Integer, HashMap<Integer,VueElement>> resultat = new HashMap<Integer, HashMap<Integer,VueElement>>();
 		
-		int distPlusProche = Math.max(Arene.tailleAreneX, Arene.tailleAreneY);
+		int distPlusProche = Math.max(100, 100);
 		int refPlusProche = 0;
 	
 		for(Integer ref:voisins.keySet()) {
@@ -40,33 +37,4 @@ public class Strategie {
 		return resultat;
 	}
 
-	public static HashMap<Integer, HashMap<Integer,VueElement>> chercherEquipementProche(VueElement ve, Hashtable<Integer,VueElement> voisins){
-		Hashtable<Integer,VueElement> voisinsEquip = new Hashtable<Integer, VueElement>();
-		// Recopier voisins
-		// Enlever les personnages des voisins
-		for (Integer ref : voisins.keySet()) {
-			VueElement veTemp = voisins.get(ref);
-			if (Equipement.class.isAssignableFrom(veTemp.getElement().getClass())) {
-				voisinsEquip.put(ref, veTemp);
-			}
-		}
-		
-		// Chercher elements le plus proche avec voisins
-		return chercherElementProche(ve, voisinsEquip);
-	}
-
-	public static HashMap<Integer, HashMap<Integer,VueElement>> chercherPersonnageProche(VueElement ve, Hashtable<Integer,VueElement> voisins){
-		Hashtable<Integer,VueElement> vonsinsPerso = new Hashtable<Integer, VueElement>();
-		// Recopier voisins
-		// Enlever les équipements des voisins
-		for (Integer ref : voisins.keySet()) {
-			VueElement veTemp = voisins.get(ref);
-			if (Personnage.class.isAssignableFrom(veTemp.getElement().getClass())) {
-				vonsinsPerso.put(ref, veTemp);
-			}
-		}
-		
-		// Chercher elements le plus proche avec voisins
-		return chercherElementProche(ve, vonsinsPerso);
-	}
 }

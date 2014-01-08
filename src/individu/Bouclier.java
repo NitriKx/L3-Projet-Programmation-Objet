@@ -1,4 +1,4 @@
-package equipement;
+package individu;
 
 public class Bouclier extends Equipement {
 	
@@ -11,7 +11,7 @@ public class Bouclier extends Equipement {
 	 * Constructeur bouclier
 	 */
 	public Bouclier() {
-		super("Bouclier", new Caracteristiques(0, 0, 10, 0, 0));
+		super("T5Bouclier", 0, 0, 0, 0, 0);
 	}
 
 	@Override

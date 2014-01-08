@@ -9,7 +9,7 @@ public interface  IDuel {
 	 * Realise le combat entre deux personnages
 	 * @throws RemoteException
 	 */
-	public void realiserCombat() throws RemoteException; 
+	public int realiserCombat() throws RemoteException; 
 	
 	/**
 	 * Renvoie la reference de l'attaquant connue par le serveur

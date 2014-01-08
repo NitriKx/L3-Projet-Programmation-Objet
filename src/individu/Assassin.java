@@ -1,8 +1,7 @@
 package individu;
 
-import equipement.Caracteristiques;
 
-public class Assassin extends Personnage {
+public class Assassin extends Personne {
 	/**
 	 * 
 	 */
@@ -12,7 +11,7 @@ public class Assassin extends Personnage {
 	 * Constructeur Assassin
 	 */
 	public Assassin() {
-		super("Assassin", 100, new Caracteristiques(150, 10, 6, 2, 15), 10);
+		super("T5Assassin", 100, 0, 0, 0);
 	}
 	
 	/**
