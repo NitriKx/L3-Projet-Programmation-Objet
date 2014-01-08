@@ -83,10 +83,10 @@ public class Arene extends UnicastRemoteObject implements IArene, Runnable {
 						to=new TimeoutOp(r);
 						to.join(1000);
 						if (to.isAlive()) {
-							to=null;
-							System.out.println("Depassement du temps (client ne+"+elements.get(r).getRef()+") !");
-							elements.remove(r);
-							((IConsole) r).shutDown("Presence sur l'arene trop long. Degage !");
+//							to=null;
+//							System.out.println("Depassement du temps (client ne+"+elements.get(r).getRef()+") !");
+//							elements.remove(r);
+//							((IConsole) r).shutDown("Presence sur l'arene trop long. Degage !");
 						}
 						else{
 							Element elem = ((IConsole) r).getElement();

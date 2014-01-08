@@ -121,7 +121,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 			//i le plus proche est a proximite
 			if (distPlusProche<=1) { //si la cible est un equipement
 				if(cible.getControleur().getElement() instanceof Equipement) {
-					if (((Personne) elem).getInventaire() > 0) {
+					if (((Personne) elem).getInventaire() >= ((Equipement) cible.getControleur().getElement()).totalEffetInventaire()) {
 						//ramassage
 						parler("Je tente de ramasser un objet");
 						((IArene) serveur).ramasser(refRMI, refPlusProche);
@@ -132,7 +132,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 				}
 				
 				//si la cible est une personne
-				if(cible.getControleur().getElement() instanceof Personne) {
+				else if(cible.getControleur().getElement() instanceof Personne) {
 					//jeu
 					parler("Je joue avec "+refPlusProche);
 					((IArene) serveur).interaction(refRMI, refPlusProche);
@@ -140,20 +140,29 @@ public class Console extends UnicastRemoteObject implements IConsole {
 				
 			}
 			//sinon
-			else { 
-				if (refPlusProche!=0) {
-					if (((Personne) elem).getInventaire() > 0) {
-						parler("Je me dirige vers "+refPlusProche);
-					}
-					else {
-						refPlusProche =0;
-						parler("Je ne vais pas me diriger vers l'objet");
+			else {
+				if(cible != null && cible.getControleur().getElement() instanceof Equipement) {
+					if (refPlusProche!=0) {
+						if (((Personne) elem).getInventaire() >= ((Equipement) cible.getControleur().getElement()).totalEffetInventaire()) {
+							parler("Je me dirige vers l'objet " + refPlusProche);
+							seDirigerVers(refPlusProche);
+						}
+						else {
+							parler("Je ne vais pas me diriger vers l'objet");
+							seDirigerVers(0);
+						}
 					}
 				}
-				else parler("J'erre..."); 
-			
-				//l'element courant se deplace vers le plus proche (s'il existe) sinon il erre
-				seDirigerVers(refPlusProche);
+
+				else if(cible != null && cible.getControleur().getElement() instanceof Personne) {
+					parler("Je me dirige vers "+refPlusProche);
+					seDirigerVers(refPlusProche);
+				}
+				
+				else {
+					parler("J'erre...");
+					seDirigerVers(0);
+				}
 			}
 		}
 	}
