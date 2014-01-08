@@ -267,7 +267,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 		((Personne)this.elem).setEsquive(esquive);
 		((Personne)this.elem).setInventaire(inventaire);
 		//mise a jour de l'inventaire
-		((Personne)this.elem).setInventaire(((Equipement)(objet.getElement())).totalEffetInventaire()*3/4);
+		((Personne)this.elem).setInventaire(inventaire - ((Equipement)(objet.getElement())).totalEffetInventaire()*3/4);
 		//mise a zero Equipement pour empecher double emploi
 		((Equipement)(objet.getElement())).setBonusForce(0);
 		((Equipement)(objet.getElement())).setBonusDefense(0);

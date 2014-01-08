@@ -92,13 +92,21 @@ public class Equipement extends Element {
 		this.bonusInventaire = bonusInventaire;
 	}
 	
+	/**
+
+	* Calcul du poids de cet equipement
+
+	* @return
+
+	*/
+
 	public int totalEffetInventaire() {
 		int limiteInventaire = 0;
-		if (bonusForce >0) limiteInventaire= bonusForce;
+		if (bonusForce >0) limiteInventaire+= bonusForce;
 		if (bonusDefense >0) limiteInventaire= bonusDefense;
-		if (bonusVie >0) limiteInventaire= bonusVie;
-		if (bonusEsquive >0) limiteInventaire= bonusEsquive;
-		if (bonusInventaire >0) limiteInventaire= bonusInventaire;
+		if (bonusVie >0) limiteInventaire+= bonusVie;
+		if (bonusEsquive >0) limiteInventaire+= bonusEsquive;
+		if (bonusInventaire >0) limiteInventaire+= bonusInventaire;
 		return limiteInventaire*3/4;
 	}
 	/* (non-Javadoc)
@@ -106,7 +114,7 @@ public class Equipement extends Element {
 	 */
 	@Override
 	public String toString() {
-		return "Equipement [bonusForce=" + bonusForce + ", bonusDefense="
+		return this.getNom() + " [bonusForce=" + bonusForce + ", bonusDefense="
 				+ bonusDefense + ", bonusVie=" + bonusVie + ", bonusEsquive="
 				+ bonusEsquive + ", bonusInventaire=" + bonusInventaire + "]";
 	}
