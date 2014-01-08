@@ -325,7 +325,7 @@ public class IHM extends JFrame {
 			}
 			
 			// Draw the grid
-			g.setColor(Color.GRAY);
+			g.setColor(new Color(255, 255, 255, 50));
 			for(float x = 0; x < rect.width; x += widthCase) {
 				g.drawLine((int) x, 0, (int) x, rect.height);
 			}
