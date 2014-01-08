@@ -17,11 +17,7 @@ public class Balance {
 			// Si c'est une personne
 			Equipement equi = (Equipement) el;
 			float bal = 20; // Malus maximal
-			bal += equi.getBonusDefense();
-			bal += equi.getBonusEsquive();
-			bal += equi.getBonusForce();
-			bal += equi.getBonusInventaire();
-			bal += equi.getBonusVie();
+			bal += equi.totalEffetInventaire();
 			bal /= 40; // Malus max + bonus max
 			return (bal < 0) ? 0 : ((bal > 1) ? 1 : bal);
 		} else {
