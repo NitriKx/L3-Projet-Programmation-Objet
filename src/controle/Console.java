@@ -1,6 +1,7 @@
 package controle;
 
 import individu.Element;
+import individu.Mineur;
 import individu.Personne;
 import individu.Equipement;
 import interfaceGraphique.VueElement;
@@ -13,7 +14,6 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Random;
-
 
 import serveur.IArene;
 import utilitaires.UtilitaireConsole;
@@ -119,22 +119,33 @@ public class Console extends UnicastRemoteObject implements IConsole {
 			
 			
 			// Si quelque chose est à côté du personnage
-			if (distPlusProche<=1) { //si la cible est un equipement
+			if (distPlusProche<=1) {
+				// Si le voisin est un équipement
 				if(cible.getControleur().getElement() instanceof Equipement) {
-					if (((Personne) elem).getInventaire() >= ((Equipement) cible.getControleur().getElement()).totalEffetInventaire()) {
-						//ramassage
-						parler("Je tente de ramasser un objet");
-						((IArene) serveur).ramasser(refRMI, refPlusProche);
+					Equipement equiProche = ((Equipement) cible.getControleur().getElement());
+					
+					// Si cet objet loge dans mon inventaire
+					if (((Personne) elem).getInventaire() >= equiProche.totalEffetInventaire()) {
+						// Si cet objet est fait pour me rapporté de la vie
+						// Je vérifie ma vie restante et la distance restant à parcourir
+						// Pour estimer si ça vaut le coup d'aller le chercher
+						if (100 + equiProche.getBonusVie()/2 >= elem.getVie() + equiProche.getBonusVie()) {
+							parler("Je tente de ramasser un objet");
+							((IArene) serveur).ramasser(refRMI, refPlusProche);
+						} else {
+							parler("Cet objet ne me rapporterai pas assez de vie");
+							seDirigerVers(0);
+						}
 					} else {
-						parler("Je ne peux pas ramasser cet objet");
+						parler("Pas assez de place pour ramasser cet objet");
 						seDirigerVers(0);
 					}
 				}
 				
-				//si la cible est une personne
+				// Si le voisin est une personne
 				else if(cible.getControleur().getElement() instanceof Personne) {
 					//jeu
-					parler("Je joue avec "+refPlusProche);
+					parler("Je me bats avec "+refPlusProche);
 					((IArene) serveur).interaction(refRMI, refPlusProche);
 				}
 				
@@ -143,23 +154,40 @@ public class Console extends UnicastRemoteObject implements IConsole {
 			// Sinon regarder l'élément le plus proche
 			else {
 				
-				// Si il y a un équipement 
+				// Si c'est un équipement 
 				if(cible != null && cible.getControleur().getElement() instanceof Equipement) {
-					if (((Personne) elem).getInventaire() >= ((Equipement) cible.getControleur().getElement()).totalEffetInventaire()) {
-						parler("Je me dirige vers l'objet " + refPlusProche);
-						seDirigerVers(refPlusProche);
+					Equipement equiProche = ((Equipement) cible.getControleur().getElement());
+					if (((Personne) elem).getInventaire() >= equiProche.totalEffetInventaire()) {
+						// Si cet objet est fait pour me rapporté de la vie
+						// Je vérifie ma vie restante et la distance restant à parcourir
+						// Pour estimer si ça vaut le coup d'aller le chercher
+						if (100 + equiProche.getBonusVie()/(distPlusProche + 1) >= elem.getVie() + equiProche.getBonusVie()) {
+							parler("Je me dirige vers l'objet " + refPlusProche);
+							seDirigerVers(refPlusProche);
+						} else {
+							parler("Cet objet ne me rapporterai trop de vie");
+							seDirigerVers(0);
+						}
 					}
 					else {
 						parler("Place insuffisante, inutile de se diriger vers cet objet");
 						seDirigerVers(0);
 					}
 				}
-
+				
+				// Si c'est un personnage
 				else if(cible != null && cible.getControleur().getElement() instanceof Personne) {
-					parler("Je me dirige vers "+refPlusProche);
-					seDirigerVers(refPlusProche);
+					// Si c'est un Mineur il vérifie qu'il a récupéré de l'attaque (au moins 10)
+					if (elem instanceof Mineur && ((Personne) elem).getAttaque() < 10) {
+						parler("Pas assez d'attaque, je fuis !");
+						seDirigerVers(0);
+					} else {
+						parler("Je me dirige vers "+refPlusProche);
+						seDirigerVers(refPlusProche);
+					}
 				}
 				
+				// Si il n'y a rien alors errer
 				else {
 					parler("J'erre...");
 					seDirigerVers(0);
