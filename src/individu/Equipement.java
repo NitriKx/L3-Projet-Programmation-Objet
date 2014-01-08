@@ -93,13 +93,9 @@ public class Equipement extends Element {
 	}
 	
 	/**
-
 	* Calcul du poids de cet equipement
-
 	* @return
-
 	*/
-
 	public int totalEffetInventaire() {
 		int limiteInventaire = 0;
 		if (bonusForce >0) limiteInventaire+= bonusForce;
