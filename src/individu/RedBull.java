@@ -13,7 +13,7 @@ public class RedBull extends Equipement implements IAfficheImage {
 	 * Constructeur red bull
 	 */
 	public RedBull() {
-		super("T5Red Bull", 0, 0, 0, 0, 0);
+		super("T5Red Bull", 0, 0, 0, 5, 15/4);
 	}
 	
 	@Override

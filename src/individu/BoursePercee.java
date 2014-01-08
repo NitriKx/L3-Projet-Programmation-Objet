@@ -13,7 +13,7 @@ public class BoursePercee extends Equipement implements IAfficheImage {
 	 * Constructeur bourse percée
 	 */
 	public BoursePercee() {
-		super("T5Bourse Percée", 0, 0, 0, 0, 0);
+		super("T5Bourse Percée", 0, 0, 0, 0, -10);
 	}
 	
 	@Override

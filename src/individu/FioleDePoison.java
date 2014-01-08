@@ -13,7 +13,7 @@ public class FioleDePoison extends Equipement implements IAfficheImage {
 	 * Constructeur fiole de poison
 	 */
 	public FioleDePoison() {
-		super("T5Fiole De Poison", 0, 0, 0, 0, 0);
+		super("T5Fiole De Poison", 0, -5, -5, 0, 0);
 	}
 	
 	@Override

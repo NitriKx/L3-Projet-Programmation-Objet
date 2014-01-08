@@ -14,7 +14,7 @@ public class Pieces extends Equipement implements IAfficheImage {
 	 * Constructeur pieces
 	 */
 	public Pieces() {
-		super("T5Pièces", 0, 0, 0, 0, 0);
+		super("T5Pièces", 0, 0, 0, 0, 10);
 	}
 	
 

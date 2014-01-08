@@ -13,7 +13,7 @@ public class Potion extends Equipement implements IAfficheImage {
 	 * Constructeur potion
 	 */
 	public Potion() {
-		super("T5Potion", 0, 0, 0, 0, 0);
+		super("T5Potion", 10, 0, 0, 0, 30/4);
 	}
 	
 

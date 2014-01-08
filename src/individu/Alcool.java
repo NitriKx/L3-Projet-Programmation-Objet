@@ -13,7 +13,7 @@ public class Alcool extends Equipement implements IAfficheImage {
 	 * Constructeur alcool
 	 */
 	public Alcool() {
-		super("T5Alcool", 0, 0, 0, 0, 0);
+		super("T5Alcool", 3, 0, 0, -3, 0);
 	}
 	
 	@Override

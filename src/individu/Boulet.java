@@ -13,7 +13,7 @@ public class Boulet extends Equipement implements IAfficheImage {
 	 * Constructeur boulet
 	 */
 	public Boulet() {
-		super("T5Boulet", 0, 0, 0, 0, 0);
+		super("T5Boulet", 0, 0, 0, -5, 0);
 	}
 	
 	@Override
