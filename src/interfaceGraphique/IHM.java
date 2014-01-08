@@ -243,7 +243,7 @@ public class IHM extends JFrame {
 			graphics.setColor(Color.BLACK);
 			graphics.fillOval(cx-8, cy-8, 47, 47);
 			
-			graphics.setColor(Couleur.getBlendedColor(vueElement.getControleur().getElement().getBalance()));
+			graphics.setColor(Couleur.getBlendedColor(Balance.getBalance(vueElement.getControleur().getElement())));
 			graphics.fillOval(cx-6, cy-6, 43, 43);
 			
 			// Affiche en dessous ses points de vie

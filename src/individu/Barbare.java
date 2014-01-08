@@ -14,7 +14,7 @@ public class Barbare extends Personne implements IAfficheImage {
 	 * Constructeur Barbare
 	 */
 	public Barbare() {
-		super("T5Barbare", 100, 0, 0, 0);
+		super("T5Barbare", 40, 10, 20, 30);
 	}
 
 	/**
