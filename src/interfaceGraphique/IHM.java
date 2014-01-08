@@ -224,7 +224,7 @@ public class IHM extends JFrame {
 		 * @throws IOException
 		 */
 		private void drawImageForElement(Graphics graphics, int cx, int cy, VueElement vueElement) throws IOException {
-			BufferedImage img = ImageIO.read(new File(ELEMENT_IMG_BASE_DIRECTORY + "/" + vueElement.getControleur().getElement().getPictureFileName()));
+			BufferedImage img = ImageIO.read(new File(ELEMENT_IMG_BASE_DIRECTORY + "/" + ((IAfficheImage) vueElement.getControleur().getElement()).getPictureFileName()));
 			graphics.drawImage(img, cx, cy, null);
 		}
 		
