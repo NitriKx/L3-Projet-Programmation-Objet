@@ -15,7 +15,7 @@ public class ApparitionEquipements extends Thread {
 	private static final int limitConsecutiveErrors = 5;
 	private static final int limitConsecutiveErrorsWaintingTime = 10000;
 	
-	enum ListeEquipements {
+	private enum ListeEquipements {
 		ALCOOL,
 		BOTTES,
 		BOUCLIER,
