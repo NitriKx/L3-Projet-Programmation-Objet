@@ -42,10 +42,4 @@ public interface IElement {
 	 * @return chaine de caractère contenant le nom du fichier (relatif au dossier image)
 	 */
 	public String getPictureFileName();
-	
-	/**
-	 * Renvoie la balance de l'élément
-	 * @return Balance entre 0 et 1
-	 */
-	public float getBalance();
 }
