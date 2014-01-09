@@ -128,5 +128,30 @@ public final class VueElement implements Serializable {
 			e.printStackTrace();
 			return "";
 		}
-	}	
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public boolean equals(Object o) {
+		if(o instanceof VueElement) {
+			VueElement ve = (VueElement) o;
+			if(this.ref == ve.ref) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return ref;
+	}
+	
+	
 }
