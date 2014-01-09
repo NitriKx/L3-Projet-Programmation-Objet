@@ -1,7 +1,9 @@
 package individu;
 
 import interfaceGraphique.IAfficheImage;
-
+/**
+ * L'{@link Epee} donne un bonus de 10 d'attaque
+ */
 public class Epee extends Equipement implements IAfficheImage {
 	
 	/**

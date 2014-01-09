@@ -2,7 +2,15 @@ package individu;
 
 import interfaceGraphique.IAfficheImage;
 
-
+/**
+ * Un {@link Ninja} a la configuration suivante :
+ * <ul>
+ * <li><b>Force :</b> 25</li>
+ * <li><b>Défense :</b> 15</li>
+ * <li><b>Esquive :</b> 50</li>
+ * <li><b>Inventaire :</b> 10</li>
+ * </ul>
+ */
 public class Ninja extends Personne implements IAfficheImage {
 
 	/**

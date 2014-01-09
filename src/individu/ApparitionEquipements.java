@@ -6,7 +6,9 @@ import interfaceGraphique.IHM;
 import java.util.Random;
 
 import controle.Console;
-
+/**
+ * Permet l'apparition de plusieurs {@link Equipement} (via des threads)
+ */
 public class ApparitionEquipements extends Thread {
 	
 	// private UtilitaireConsole console = new UtilitaireConsole();

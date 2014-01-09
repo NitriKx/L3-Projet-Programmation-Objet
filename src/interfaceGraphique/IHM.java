@@ -39,8 +39,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import serveur.Arene;
 import serveur.IArene;
-
+/**
+ * Fenêtre d'affichage de l'{@link Arene}
+ */
 public class IHM extends JFrame {
 
 	private static final long serialVersionUID = 1L;

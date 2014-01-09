@@ -1,7 +1,9 @@
 package individu;
 
 import interfaceGraphique.IAfficheImage;
-
+/**
+ * La {@link BoursePercee} donne un malus de -10 de taille d'inventaire
+ */
 public class BoursePercee extends Equipement implements IAfficheImage {
 
 	/**

@@ -1,7 +1,9 @@
 package individu;
 
 import interfaceGraphique.IAfficheImage;
-
+/**
+ * Les {@link Bottes} donnent un bonus de 10 d'esquive.
+ */
 public class Bottes extends Equipement implements IAfficheImage {
 	
 	/**

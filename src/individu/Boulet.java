@@ -1,7 +1,9 @@
 package individu;
 
 import interfaceGraphique.IAfficheImage;
-
+/**
+ * Le {@link Boulet} donne un malus de 5 d'esquive
+ */
 public class Boulet extends Equipement implements IAfficheImage {
 
 	/**

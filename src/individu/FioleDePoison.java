@@ -1,7 +1,9 @@
 package individu;
 
 import interfaceGraphique.IAfficheImage;
-
+/**
+ * La {@link FioleDePoison} donne un malus de -5 en défense et en vie
+ */
 public class FioleDePoison extends Equipement implements IAfficheImage {
 	
 	/**

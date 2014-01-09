@@ -9,7 +9,9 @@ import java.util.Random;
 import controle.IConsole;
 
 import serveur.Arene;
-
+/**
+ * Simpla algorithme de duels
+ */
 public class DuelBasic implements IDuel {
 
 	private Arene arene;          //l'arene sur laquelle le jeu a lieu

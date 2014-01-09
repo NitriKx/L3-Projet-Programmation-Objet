@@ -1,5 +1,8 @@
 package individu;
 
+/**
+ * {@link Element} ayant une vie fixe de 1 et possédant des attributs de bonus
+ */
 public class Equipement extends Element {
 	
 	/**
@@ -94,7 +97,7 @@ public class Equipement extends Element {
 	
 	/**
 	* Calcul du poids de cet equipement
-	* @return
+	* @return Poids de l'inventaire
 	*/
 	public int totalEffetInventaire() {
 		int limiteInventaire = 0;

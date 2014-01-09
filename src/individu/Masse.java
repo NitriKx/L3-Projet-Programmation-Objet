@@ -1,7 +1,9 @@
 package individu;
 
 import interfaceGraphique.IAfficheImage;
-
+/**
+ * La {@link Masse} est un bonus de 20 d'attaque
+ */
 public class Masse extends Equipement implements IAfficheImage {
 	
 	/**

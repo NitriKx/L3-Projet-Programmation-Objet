@@ -1,7 +1,9 @@
 package individu;
 
 import interfaceGraphique.IAfficheImage;
-
+/**
+ * Les {@link Pieces} donne un bonne de 10 d'inventaire
+ */
 public class Pieces extends Equipement implements IAfficheImage {
 	
 	/**

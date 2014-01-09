@@ -1,7 +1,9 @@
 package individu;
 
 import interfaceGraphique.IAfficheImage;
-
+/**
+ * La {@link Potion} donne un bonus de 10 de vie
+ */
 public class Potion extends Equipement implements IAfficheImage {
 	
 	/**
