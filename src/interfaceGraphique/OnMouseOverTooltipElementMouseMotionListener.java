@@ -29,7 +29,7 @@ public class OnMouseOverTooltipElementMouseMotionListener implements MouseMotion
 	
 	public OnMouseOverTooltipElementMouseMotionListener(JPanel panel) {
 		this.panel = panel;
-		ToolTipManager.sharedInstance().setInitialDelay(0);
+		ToolTipManager.sharedInstance().setInitialDelay(10);
 	}
 	
 	public void putNewShape(VueElement e, Shape s) {
