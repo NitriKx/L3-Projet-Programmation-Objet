@@ -1,5 +1,6 @@
 package interfaceGraphique;
 
+import individu.Element;
 import individu.Personne;
 
 import java.awt.Color;
@@ -168,10 +169,11 @@ public class IHM extends JFrame {
 						dial=(s.getPhrase()==null)?"":" : "+s.getPhrase();
 						
 						// Dessine propremet les information relatives à un personnage
+						Element elem = s.getControleur().getElement();
 						try {
 							
 							// Si c'est un élément qui implémente AfficheImage
-							if(s.getControleur().getElement() instanceof IAfficheImage) {
+							if(elem instanceof IAfficheImage) {
 								// Permet d'aligner les images au milieu des cases
 								int ajustementTailleImage = 16; 
 								drawElementBackground(g2, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage, s, true);
@@ -179,13 +181,13 @@ public class IHM extends JFrame {
 								drawInformationsImage(g2, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage, s);
 							} else {
 								int ajustementTailleImage = 4;
-								drawElementAsDot(g2, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage);
+								drawElementAsDot(g2, elem, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage);
 								drawInformationsDot(g2, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage, s);
 							}
 							
 						} catch (IOException e) {
 							int ajustementTailleImage = 4;
-							drawElementAsDot(g2, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage);
+							drawElementAsDot(g2, elem, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage);
 						}
 						
 						
@@ -202,7 +204,7 @@ public class IHM extends JFrame {
 					//affiche un dialog avec le message d'erreur
 					JOptionPane.showMessageDialog(this,"Erreur de connection !\nRaison : "+e.getMessage(),"Message",JOptionPane.ERROR_MESSAGE);
 					cnxError=true;
-					e.printStackTrace();
+					// e.printStackTrace();
 				}
 			}
 			
@@ -211,9 +213,9 @@ public class IHM extends JFrame {
 			g2.drawString(DateFormat.getTimeInstance().format(new Date()),rect.width-60,20);
 		}
 
-		private void drawElementAsDot(Graphics2D g2, int cx, int cy) {
+		private void drawElementAsDot(Graphics2D g2, Element e, int cx, int cy) {
 			//construis un oval aux coordonnes cx,cy de taille 8 x 8
-			g2.setColor(Color.LIGHT_GRAY);
+			g2.setColor(Couleur.getBlendedColor(Balance.getBalance(e)));
 			g2.fillOval(cx, cy,8,8);
 		}
 		
