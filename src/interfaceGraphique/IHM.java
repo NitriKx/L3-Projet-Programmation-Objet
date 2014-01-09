@@ -212,7 +212,7 @@ public class IHM extends JFrame {
 					state=State.INIT;
 					//affiche un dialog avec le message d'erreur
 					JOptionPane.showMessageDialog(this,"Erreur de connection !\nRaison : "+e.getMessage(),"Message",JOptionPane.ERROR_MESSAGE);
-					cnxError=true;
+					// cnxError=true;
 					// e.printStackTrace();
 				}
 			}
@@ -462,13 +462,16 @@ public class IHM extends JFrame {
 	public void connect() {
 		connection=new Thread() {
 			public void run() {
-				try {
-					serveur=Naming.lookup("rmi://localhost:"+port+"/Arene");
-//					serveur=Naming.lookup("rmi://ouvea.edu.ups-tlse.fr:"+port+"/Arene");
-				} 
-				catch (Exception e) {
-					cnxError=true;
-					JOptionPane.showMessageDialog(null,"Impossible de se connecter au serveur Arene:"+port+" !\n(le serveur ne doit pas etre actif...)\nRaison : "+e.getMessage(),"Message",JOptionPane.ERROR_MESSAGE);
+				while(true) {
+					try {
+						serveur=Naming.lookup("rmi://localhost:"+port+"/Arene");
+	//					serveur=Naming.lookup("rmi://ouvea.edu.ups-tlse.fr:"+port+"/Arene");
+						Thread.sleep(1000);
+					} 
+					catch (Exception e) {
+						// cnxError=true;
+						JOptionPane.showMessageDialog(null,"Impossible de se connecter au serveur Arene:"+port+" !\n(le serveur ne doit pas etre actif...)\nRaison : "+e.getMessage() + "\nRéessayer ?","Message",JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 		};
