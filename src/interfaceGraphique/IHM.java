@@ -232,7 +232,7 @@ public class IHM extends JFrame {
 		private void drawTooltipInvisibleCircle(Graphics2D g2, int cx, int cy, VueElement e) {
 			// On créer un cercle invisible dessus pour le MouseMotionListener
 			g2.setColor(new Color(255, 255, 255, 0));
-			Shape cercleInvisible = new Ellipse2D.Float();
+			Shape cercleInvisible = new Ellipse2D.Float(cx-8, cy-8, 47, 47);
 			g2.fill(cercleInvisible);
 			this.listenerToolTip.putNewShape(e, cercleInvisible);
 		}
@@ -466,11 +466,12 @@ public class IHM extends JFrame {
 					try {
 						serveur=Naming.lookup("rmi://localhost:"+port+"/Arene");
 	//					serveur=Naming.lookup("rmi://ouvea.edu.ups-tlse.fr:"+port+"/Arene");
-						Thread.sleep(1000);
+						break;
 					} 
 					catch (Exception e) {
 						// cnxError=true;
 						JOptionPane.showMessageDialog(null,"Impossible de se connecter au serveur Arene:"+port+" !\n(le serveur ne doit pas etre actif...)\nRaison : "+e.getMessage() + "\nRéessayer ?","Message",JOptionPane.ERROR_MESSAGE);
+						try { Thread.sleep(1000); } catch (InterruptedException e1) {};
 					}
 				}
 			}
