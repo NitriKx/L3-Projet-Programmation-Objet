@@ -1,7 +1,11 @@
+package app;
+import controle.Console;
+import serveur.Arene;
 import interfaceGraphique.IHM;
 
 /**
- * Test de l'interface graphique qui se connecte a l'Arene (apres lancement Arene, avant les Consoles)
+ * Test de l'interface graphique qui se connecte à l'{@link Arene} (apres lancement
+ * {@link Arene}, avant les {@link Console})
  */
 public class TestIHM {
 
@@ -13,13 +17,16 @@ public class TestIHM {
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		// Changement du nom de l'application dans le dock OS-X
 		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Arène");
-		
-		IHM ihm=new IHM();
+
+		IHM ihm = new IHM();
 		ihm.connect();
-		//boucle infine, interrompue par l'utilisateur (IHM)
-		while(true) {
-			try {Thread.sleep(500);} catch (InterruptedException e) {}
-			ihm.repaint(); 
+		// boucle infine, interrompue par l'utilisateur (IHM)
+		while (true) {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+			}
+			ihm.repaint();
 		}
 	}
 

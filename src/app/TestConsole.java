@@ -1,13 +1,16 @@
+package app;
 import individu.Assassin;
+import individu.Element;
 import interfaceGraphique.IHM;
 
 import java.rmi.RemoteException;
 import java.util.Random;
 
+import serveur.Arene;
 import controle.Console;
 
 /**
- * Test de la Console avec un Element qui s'ajoute a l'Arene (apres lancement Arene et IHM). A lancer en plusieurs exemplaires.
+ * Test de la {@link Console} avec un {@link Element} qui s'ajoute à l'{@link Arene} (apres lancement {@link Arene} et {@link IHM}). A lancer en plusieurs exemplaires.
  */
 public class TestConsole {
 

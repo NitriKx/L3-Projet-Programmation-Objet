@@ -1,13 +1,15 @@
+package app;
 import individu.Mineur;
 import interfaceGraphique.IHM;
 
 import java.rmi.RemoteException;
 import java.util.Random;
 
+import serveur.Arene;
 import controle.Console;
 
 /**
- * Test de la Console avec un Element qui s'ajoute a l'Arene (apres lancement Arene et IHM). A lancer en plusieurs exemplaires.
+ * Lance un {@link Mineur} dans une {@link Arene}
  */
 public class TestMineur {
 
@@ -16,8 +18,7 @@ public class TestMineur {
 	 * @throws RemoteException 
 	 */
 	public static void main(String[] args) throws RemoteException {
-		Mineur min = new Mineur();
-		new Console(min, new Random().nextInt(IHM.tailleAreneX), new Random().nextInt(IHM.tailleAreneY), TestServeur.port);		
+		new Console(new Mineur(), new Random().nextInt(IHM.tailleAreneX), new Random().nextInt(IHM.tailleAreneY), TestServeur.port);		
 	}
 
 }

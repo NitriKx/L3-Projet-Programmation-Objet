@@ -1,3 +1,4 @@
+package app;
 import individu.Alcool;
 import individu.Bottes;
 import individu.Bouclier;
@@ -6,6 +7,7 @@ import individu.BoursePercee;
 import individu.Casque;
 import individu.Element;
 import individu.Epee;
+import individu.Equipement;
 import individu.FioleDePoison;
 import individu.Masse;
 import individu.Pieces;
@@ -18,7 +20,9 @@ import java.util.Random;
 
 import controle.Console;
 
-
+/**
+ * Fait apparaitre aléatoirement un {@link Equipement}
+ */
 public class TestEquipement {
 	private enum ListeEquipements {
 		ALCOOL,
