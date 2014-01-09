@@ -41,7 +41,7 @@ public class Troll extends Personne implements IAfficheImage {
 			vieGetCountdown--;
 			return super.getVie();
 		}
-		return 10000000;
+		return 100;
 	}
 
 }
