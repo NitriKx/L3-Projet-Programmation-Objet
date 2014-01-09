@@ -1,5 +1,6 @@
 package individu;
 
+
 /**
  * {@link Element} ayant des caractéristiques supplémentaires
  */
@@ -13,8 +14,6 @@ public class Personne extends Element{
 	private int esquive;                              //probabilite d'annuler une attaque
 	private int inventaire;						  //capacite en terme de poids des objets deja utilises	
 
-	
-	
 	/**
 	 * @param nom
 	 * @param force
@@ -22,13 +21,12 @@ public class Personne extends Element{
 	 * @param esquive
 	 * @param inventaire
 	 */
-	public Personne(String nom, int force, int defense, int esquive,
-			int inventaire) {
-		super(nom,100);
-		this.force = force;
-		this.defense = defense;
-		this.esquive = esquive;
-		this.inventaire = inventaire;
+	public Personne() {
+		super("T5Troll",100);
+		this.force = 20;
+		this.defense = 10;
+		this.esquive = 0;
+		this.inventaire = 70;
 	}
 
 	
@@ -37,28 +35,28 @@ public class Personne extends Element{
 	 * Renvoie le nombre de vies du combattant prenant en compte aussi les bonus des objets ramasses
 	 */
 	public int getVie() {
-		return super.getVie();
+		return 100;
 	}
 
 	/**
 	 * Renvoie la force du combattant prenant en compte les bonus des abjets ramasses
 	 */
 	public int getAttaque() {
-		return this.force;
+		return this.getForce();
 	}
 	
 	/**
 	 * Renvoir la defense du combattant prenant en compte les bonus des objets ramasses
 	 */
 	public int getDefense() {
-		return this.defense ;
+		return this.defense;
 	}
 	
 	/**
 	 * @return the force
 	 */
 	public int getForce() {
-		return force;
+		return this.force;
 	}
 
 
@@ -76,7 +74,7 @@ public class Personne extends Element{
 	 * @return the esquive
 	 */
 	public int getEsquive() {
-		return esquive;
+		return this.esquive;
 	}
 
 

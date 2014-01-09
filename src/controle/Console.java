@@ -2,7 +2,6 @@ package controle;
 
 import individu.Element;
 import individu.Equipement;
-import individu.Mineur;
 import individu.Personne;
 import interfaceGraphique.VueElement;
 
@@ -177,7 +176,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 				// Si c'est un personnage
 				else if(cible != null && cible.getControleur().getElement() instanceof Personne) {
 					// Si c'est un Mineur il vérifie qu'il a récupéré de l'attaque (au moins 15)
-					if (elem instanceof Mineur && ((Personne) elem).getForce() < 15) {
+					if (((Personne) elem).getForce() < 15) {
 						parler("Pas assez d'attaque, je fuis !");
 						seDirigerVers(0);
 					} else {
