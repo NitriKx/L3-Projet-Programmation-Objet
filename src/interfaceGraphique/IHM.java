@@ -232,7 +232,7 @@ public class IHM extends JFrame {
 		private void drawTooltipInvisibleCircle(Graphics2D g2, int cx, int cy, VueElement e) {
 			// On créer un cercle invisible dessus pour le MouseMotionListener
 			g2.setColor(new Color(255, 255, 255, 0));
-			Shape cercleInvisible = new Ellipse2D.Float(cx-8, cy-8, 47, 47);
+			Shape cercleInvisible = new Ellipse2D.Float();
 			g2.fill(cercleInvisible);
 			this.listenerToolTip.putNewShape(e, cercleInvisible);
 		}
@@ -247,8 +247,7 @@ public class IHM extends JFrame {
 		private void drawElementAsDot(Graphics2D g2, Element e, int cx, int cy) {
 			//construis un oval aux coordonnes cx,cy de taille 8 x 8
 			g2.setColor(Couleur.getBlendedColor(Balance.getBalance(e)));
-			Shape circle = new Ellipse2D.Float(cx, cy, 8, 8);
-			g2.fill(circle);
+			g2.fillOval(cx, cy, 8, 8);
 		}
 		
 		/**
@@ -260,7 +259,7 @@ public class IHM extends JFrame {
 		 */
 		private void drawTooltipInvisibleCircleDot(Graphics2D g2, int cx, int cy, VueElement e) {
 			// On créer un cercle invisible dessus pour le MouseMotionListener
-			g2.setColor(new Color(255, 255, 255, 255));
+			g2.setColor(new Color(255, 255, 255, 0));
 			Shape cercleInvisible = new Ellipse2D.Float(cx, cy, 8, 8);
 			g2.fill(cercleInvisible);
 			this.listenerToolTip.putNewShape(e, cercleInvisible);
