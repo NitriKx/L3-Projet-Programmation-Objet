@@ -12,10 +12,12 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -71,6 +73,8 @@ public class IHM extends JFrame {
 		private static final long serialVersionUID = 1L;
 		private JTextArea jta;
 		
+		private OnMouseOverTooltipElementMouseMotionListener listenerToolTip;
+		
 		//Conteneur qui affiche l'arene de jeu
 		AreneJPanel(JTextArea jta) {
 			this.jta=jta;
@@ -80,6 +84,10 @@ public class IHM extends JFrame {
 		            updatePreferredSize(e.getWheelRotation(), e.getPoint());
 		        }
 		    });
+		    
+		    // On ajoute le motion listener utilisé pour la tooltip
+		    listenerToolTip = new OnMouseOverTooltipElementMouseMotionListener(this);
+		    this.addMouseMotionListener(listenerToolTip);
 		}
 		
 		private void updatePreferredSize(int n, Point p) {
@@ -114,7 +122,8 @@ public class IHM extends JFrame {
 			
 			drawGridAndBackground(g2);
 			
-			
+			// On supprime les MouseMotionListeners qui servent pour afficher les caractéristiques des éléments
+			// removeAllOnMouseMotionListeners();
 			
 			//si la connexion est en cours ou il y a une erreur
 			if ((state==State.INIT) || (cnxError)) {
@@ -153,11 +162,6 @@ public class IHM extends JFrame {
 					//pour chaque element en vie sur l'arene
 					for(VueElement s:world) {
 						
-//						Random r=new Random(ref);
-//						Color vueElementColor = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255), 200);
-//						//calcule une couleur pour la representation
-//						g.setColor(vueElementColor);
-						
 						//recupere les coordonnes de l'element
 						int ratioX = rect.width/tailleAreneX;
 						int ratioY = rect.height/tailleAreneY;
@@ -179,10 +183,12 @@ public class IHM extends JFrame {
 								drawElementBackground(g2, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage, s, true);
 								drawImageForElement(g2, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage, s);
 								drawInformationsImage(g2, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage, s);
+								drawTooltipInvisibleCircle(g2, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage, s);
 							} else {
 								int ajustementTailleImage = 4;
 								drawElementAsDot(g2, elem, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage);
 								drawInformationsDot(g2, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage, s);
+								drawTooltipInvisibleCircleDot(g2, (cx+ratioX/2)-ajustementTailleImage, (cy+ratioY/2)-ajustementTailleImage, s);
 							}
 							
 						} catch (IOException e) {
@@ -212,11 +218,49 @@ public class IHM extends JFrame {
 			g2.setColor(Color.WHITE);
 			g2.drawString(DateFormat.getTimeInstance().format(new Date()),rect.width-60,20);
 		}
-
+		
+		/**
+		 * 
+		 * @param g2
+		 * @param cx
+		 * @param cy
+		 * @param e
+		 */
+		private void drawTooltipInvisibleCircle(Graphics2D g2, int cx, int cy, VueElement e) {
+			// On créer un cercle invisible dessus pour le MouseMotionListener
+			g2.setColor(new Color(255, 255, 255, 0));
+			Shape cercleInvisible = new Ellipse2D.Float(cx-8, cy-8, 47, 47);
+			g2.fill(cercleInvisible);
+			this.listenerToolTip.putNewShape(e, cercleInvisible);
+		}
+		
+		/**
+		 * 
+		 * @param g2
+		 * @param e
+		 * @param cx
+		 * @param cy
+		 */
 		private void drawElementAsDot(Graphics2D g2, Element e, int cx, int cy) {
 			//construis un oval aux coordonnes cx,cy de taille 8 x 8
 			g2.setColor(Couleur.getBlendedColor(Balance.getBalance(e)));
-			g2.fillOval(cx, cy,8,8);
+			Shape circle = new Ellipse2D.Float(cx, cy, 8, 8);
+			g2.fill(circle);
+		}
+		
+		/**
+		 * 
+		 * @param g2
+		 * @param cx
+		 * @param cy
+		 * @param e
+		 */
+		private void drawTooltipInvisibleCircleDot(Graphics2D g2, int cx, int cy, VueElement e) {
+			// On créer un cercle invisible dessus pour le MouseMotionListener
+			g2.setColor(new Color(255, 255, 255, 255));
+			Shape cercleInvisible = new Ellipse2D.Float(cx, cy, 8, 8);
+			g2.fill(cercleInvisible);
+			this.listenerToolTip.putNewShape(e, cercleInvisible);
 		}
 		
 		/**
@@ -229,7 +273,7 @@ public class IHM extends JFrame {
 		 */
 		private void drawImageForElement(Graphics graphics, int cx, int cy, VueElement vueElement) throws IOException {
 			BufferedImage img = ImageIO.read(new File(ELEMENT_IMG_BASE_DIRECTORY + "/" + ((IAfficheImage) vueElement.getControleur().getElement()).getPictureFileName()));
-			graphics.drawImage(img, cx, cy-1, null);
+			graphics.drawImage(img, cx, cy-3, null);
 		}
 		
 		/**
@@ -245,10 +289,12 @@ public class IHM extends JFrame {
 		private void drawElementBackground(Graphics2D graphics, int cx, int cy, VueElement vueElement, boolean right) throws RemoteException {
 			// Dessine un cadre autour de l'icône
 			graphics.setColor(Color.BLACK);
-			graphics.fillOval(cx-8, cy-8, 47, 47);
+			Shape cercleNoir = new Ellipse2D.Float(cx-8, cy-8, 47, 47);
+			graphics.fill(cercleNoir);
 			
 			graphics.setColor(Couleur.getBlendedColor(Balance.getBalance(vueElement.getControleur().getElement())));
-			graphics.fillOval(cx-6, cy-6, 43, 43);
+			Shape cercleVert = new Ellipse2D.Float(cx-6, cy-6, 43, 43);
+			graphics.fill(cercleVert);
 			
 			// Affiche en dessous ses points de vie si c'est une personne
 			if(Personne.class.isAssignableFrom(vueElement.getControleur().getElement().getClass())) {
@@ -337,6 +383,7 @@ public class IHM extends JFrame {
 			}
 			
 		}
+		
 	}
 	
 	public IHM() {
