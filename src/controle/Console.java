@@ -279,7 +279,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 	}
 	
 	public void parler(String s) throws RemoteException {
-		ve.setPhrase(s);	
+		ve.setPhrase("["+refRMI+"]"+s);	
 	}
 	
 
@@ -340,5 +340,11 @@ public class Console extends UnicastRemoteObject implements IConsole {
 	public void ajouterConnu(int ref) throws RemoteException {
 		elem.ajouterConnu(ref);
 	}
-		
+	
+	/**
+	 * position initiale aleatoire
+	 */
+	public void posInit(Point p) throws RemoteException {
+		ve.setPoint(p);
+	}
 }

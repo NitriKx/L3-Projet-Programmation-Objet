@@ -16,6 +16,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Random;
 
 import controle.IConsole;
 
@@ -36,9 +37,14 @@ public class Arene extends UnicastRemoteObject implements IArene, Runnable {
     private  Hashtable<Remote,VueElement> elements = null; //elements connectes au serveur
     private Hashtable<Integer,String> ipAddrConsoles = null; //repertoire des refRMI et leur adresses ip
     //Attributs pour gerer l'apparition des objets de facon "ordonnee" et aleatoire
+    private int nbElemMax = 100;
     private int compteurEquipements = 0;
     private Hashtable<Remote,VueElement> equipements = null;
     private Hashtable<Integer,String> ipAddrConsolesEquipements = null;
+    //Attributs pour gerer l'apparition des personnes de facon "ordonnee" et aleatoire
+    private int compteurPersonnes = 0;
+    private Hashtable<Remote,VueElement> personnes = null;
+    private Hashtable<Integer,String> ipAddrConsolesPersonnes = null;
     
 	/**
 	 * Constructeur 
@@ -46,15 +52,20 @@ public class Arene extends UnicastRemoteObject implements IArene, Runnable {
 	 * @param ipName nom de la machine qui heberge l'arene 
 	 * @throws Exception
 	 */
-	public Arene(int port, String ipName) throws Exception {
+	public Arene(int port, String ipName, int maxElem) throws Exception {
 		super();
 		this.port=port;
 		this.ipName = ipName;
 		Naming.rebind("rmi://"+this.ipName+":"+this.port+"/Arene",this);
+		nbElemMax = maxElem;
 		elements = new Hashtable<Remote,VueElement>();
 		equipements = new Hashtable<Remote,VueElement>();
+		personnes = new Hashtable<Remote,VueElement>();
 		ipAddrConsoles = new Hashtable<Integer,String>();
 		ipAddrConsolesEquipements = new Hashtable<Integer,String>();
+		ipAddrConsolesPersonnes = new Hashtable<Integer,String>();
+		compteurEquipements = nbElemMax;
+		compteurPersonnes = nbElemMax;
 		new Thread(this).start();
 	}
 	
@@ -83,10 +94,10 @@ public class Arene extends UnicastRemoteObject implements IArene, Runnable {
 						to=new TimeoutOp(r);
 						to.join(1000);
 						if (to.isAlive()) {
-//							to=null;
-//							System.out.println("Depassement du temps (client ne+"+elements.get(r).getRef()+") !");
-//							elements.remove(r);
-//							((IConsole) r).shutDown("Presence sur l'arene trop long. Degage !");
+							to=null;
+							System.out.println("Depassement du temps (client ne+"+elements.get(r).getRef()+") !");
+							elements.remove(r);
+							((IConsole) r).shutDown("Presence sur l'arene trop long. Degage !");
 						}
 						else{
 							Element elem = ((IConsole) r).getElement();
@@ -107,7 +118,7 @@ public class Arene extends UnicastRemoteObject implements IArene, Runnable {
 	/**
 	 * Verifie que les capacites soient positives et inferieures au seuil
 	 * @param r
-	 * @return 
+	 * @return
 	 * <ul>
 	 * <li><code>true</code></li> : Capacités réglementaires
 	 * <li><code>false</code></li> : Capacités trichées
@@ -139,18 +150,49 @@ public class Arene extends UnicastRemoteObject implements IArene, Runnable {
 		 */
 	  public synchronized void connect(VueElement s, String ipConsole) throws RemoteException {
 			try {
+				//creation du lien serveur-console
 			    int portConsole = port+s.getRef(); //on associe un port unique a chaque console
 			    Remote r=Naming.lookup("rmi://"+ipConsole+":"+portConsole+"/Console"+s.getRef());
-			    if (verif(r)){
-                    elements.put(r, s);
-			    	System.out.println("connect: ref = "+s.getRef());
-			    	ipAddrConsoles.put(s.getRef(),ipConsole);
-			    }
-                else
-                    ((IConsole) r).shutDown("Tu as triché vilain garon! Tu es viré !");
+			    //calcul aleatoire position initiale
+			    Random alea = new Random();
+			    ((IConsole) r).posInit(new Point(alea.nextInt(100),alea.nextInt(100)));
 			    
-				
-				
+			    //Comportement selon Equipement/Personne
+			    if(((IConsole) r).getElement() instanceof Equipement){
+			    	//on met les equipements dans la pile
+			    	equipements.put(r, s);
+            		ipAddrConsolesEquipements.put(s.getRef(), ipConsole);
+            		compteurEquipements--;
+            		//si on n'a plus de place dans la pile, on les ajoute a l'arene
+            		if(compteurEquipements == 0){
+            			//on ajoute les equipements en attente sur l'arene
+            			elements.putAll(equipements);
+            			ipAddrConsoles.putAll(ipAddrConsolesEquipements);
+            			//mise a nbMax pour le prochain largage
+            			compteurEquipements = nbElemMax;
+            			equipements = new Hashtable<Remote, VueElement>();
+            			ipAddrConsolesEquipements = new Hashtable<Integer, String>();
+            		}
+            	}
+			    else 
+			    	if (verif(r)){
+			    		//on met les personnes dans la pile
+			    		personnes.put(r, s);
+			    		ipAddrConsolesPersonnes.put(s.getRef(),ipConsole);
+			    		compteurPersonnes--;
+			    		//si on n'a plus de place dans la pile, on les ajoute a l'arene
+			    		if(compteurPersonnes == 0){
+			    		//on ajoute les equipements en attente sur l'arene
+			    		elements.putAll(personnes);
+			    		ipAddrConsoles.putAll(ipAddrConsolesPersonnes);
+			    		//mise a nbMax pour le prochain largage
+            			compteurPersonnes= nbElemMax;
+            			personnes = new Hashtable<Remote, VueElement>();
+            			ipAddrConsolesPersonnes = new Hashtable<Integer, String>();
+			    		}
+			    	}
+			    	else
+			    		((IConsole) r).shutDown("Tu as triche vilain garcon! Tu es vire !");				
 			} catch (Exception e) {
 				System.out.println("Erreur lors de la connexion d'un client (ref="+s.getRef()+") :");
 				e.printStackTrace();

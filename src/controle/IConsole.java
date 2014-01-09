@@ -3,6 +3,7 @@ package controle;
 import individu.Element;
 import interfaceGraphique.VueElement;
 
+import java.awt.Point;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -74,4 +75,10 @@ public interface IConsole extends Remote {
 	 * @throws RemoteException
 	 */
 	public String afficher() throws RemoteException;
+	
+	/**
+	 * Positionne l'element aleatoirement au debut
+	 * @throws RemoteException
+	 */
+	public void posInit(Point p) throws RemoteException;
 }

@@ -108,16 +108,29 @@ public class Equipement extends Element {
 		if (bonusInventaire >0) limiteInventaire+= bonusInventaire;
 		return limiteInventaire*3/4;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	
+	/**
+	 * Utilise par la methode parler de la console
 	 */
-	@Override
 	public String toString() {
-		return this.getNom() + " [bonusForce=" + bonusForce + ", bonusDefense="
-				+ bonusDefense + ", bonusVie=" + bonusVie + ", bonusEsquive="
-				+ bonusEsquive + ", bonusInventaire=" + bonusInventaire + "]";
-	}
-	
-	
+        return this.getNom() +
+            formatbonus('f', bonusForce) +
+            formatbonus('d', bonusDefense) +
+            formatbonus('v', bonusVie) +
+            formatbonus('e', bonusEsquive) +
+            formatbonus('i', bonusInventaire) +
+            "";
+    }
 
+	/**
+	 * Auxiliaire pour l'affichage
+	 * @param lettre
+	 * @param val
+	 * @return
+	 */
+    private String formatbonus(char lettre, int val) {
+        if (val == 0) return "";
+        else return String.format(" %c%+d", lettre, val);
+    }
+	
 }
