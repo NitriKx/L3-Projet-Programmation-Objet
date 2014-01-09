@@ -1,7 +1,9 @@
 package individu;
 
 import interfaceGraphique.IAfficheImage;
-
+/**
+ * L'{@link Alcool} est un bonus de 3 d'attaque mais un malus de -3 d'esquive
+ */
 public class Alcool extends Equipement implements IAfficheImage {
 	
 	/**

@@ -6,7 +6,9 @@ package individu;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
+/**
+ * Classe principale pour gérer les {@link Element}
+ */
 public class Element implements IElement, Serializable {
 	/**
 	 * 

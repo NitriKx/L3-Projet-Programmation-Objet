@@ -1,7 +1,9 @@
 package individu;
 
 import interfaceGraphique.IAfficheImage;
-
+/**
+ * Le {@link Casque} donne un bonus de 10 de défense
+ */
 public class Casque extends Equipement implements IAfficheImage {
 	
 	/**
@@ -13,7 +15,7 @@ public class Casque extends Equipement implements IAfficheImage {
 	 * Constructeur casque
 	 */
 	public Casque() {
-		super("T5Casque", 0, 20, 0, 0, 0);
+		super("T5Casque", 0, 10, 0, 0, 0);
 	}
 
 	@Override

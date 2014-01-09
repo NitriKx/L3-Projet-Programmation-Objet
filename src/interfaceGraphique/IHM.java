@@ -36,8 +36,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import serveur.Arene;
 import serveur.IArene;
-
+/**
+ * Fenêtre d'affichage de l'{@link Arene}
+ */
 public class IHM extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -412,8 +415,8 @@ public class IHM extends JFrame {
 		connection=new Thread() {
 			public void run() {
 				try {
-					serveur=Naming.lookup("rmi://localhost:"+port+"/Arene");
-//					serveur=Naming.lookup("rmi://ouvea.edu.ups-tlse.fr:"+port+"/Arene");
+//					serveur=Naming.lookup("rmi://localhost:"+port+"/Arene");
+					serveur=Naming.lookup("rmi://ouvea.edu.ups-tlse.fr:"+port+"/Arene");
 				} 
 				catch (Exception e) {
 					cnxError=true;

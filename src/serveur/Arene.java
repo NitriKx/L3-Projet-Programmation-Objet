@@ -107,7 +107,11 @@ public class Arene extends UnicastRemoteObject implements IArene, Runnable {
 	/**
 	 * Verifie que les capacites soient positives et inferieures au seuil
 	 * @param r
-	 * @return
+	 * @return 
+	 * <ul>
+	 * <li><code>true</code></li> : Capacités réglementaires
+	 * <li><code>false</code></li> : Capacités trichées
+	 * </ul>
 	 * @throws RemoteException
 	 */
 	public boolean verif (Remote r) throws RemoteException {

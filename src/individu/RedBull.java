@@ -1,7 +1,9 @@
 package individu;
 
 import interfaceGraphique.IAfficheImage;
-
+/**
+ * Le {@link RedBull} donne un bonus de 5 d'esquive
+ */
 public class RedBull extends Equipement implements IAfficheImage {
 
 	/**

@@ -2,6 +2,9 @@ package individu;
 
 import java.util.ArrayList;
 
+/**
+ * Interface principale pour gérer les {@link Equipement}
+ */
 public interface IElement {
 	/**
 	 * Retourne le nom de l'element

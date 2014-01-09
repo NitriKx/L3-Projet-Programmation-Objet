@@ -4,9 +4,13 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.Hashtable;
 
+import individu.Element;
+import individu.Personne;
 import interfaceGraphique.VueElement;
 import utilitaires.UtilitaireConsole;
-
+/**
+ * Permet de rechercher aux alentours de l'{@link Element}
+ */
 public class Strategie {
 
 	/**

@@ -1,7 +1,9 @@
 package individu;
 
 import interfaceGraphique.IAfficheImage;
-
+/**
+ * Le {@link Bouclier} donnent un bonus de 20 de défense.
+ */
 public class Bouclier extends Equipement implements IAfficheImage {
 	
 	/**
@@ -13,7 +15,7 @@ public class Bouclier extends Equipement implements IAfficheImage {
 	 * Constructeur bouclier
 	 */
 	public Bouclier() {
-		super("T5Bouclier", 0, 10, 0, 0, 0);
+		super("T5Bouclier", 0, 20, 0, 0, 0);
 	}
 
 	@Override

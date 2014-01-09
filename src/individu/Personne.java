@@ -1,11 +1,7 @@
-/**
- * 
- */
 package individu;
 
 /**
- * @author armellebonenfant
- *
+ * {@link Element} ayant des caractéristiques supplémentaires
  */
 public class Personne extends Element{
 	/**

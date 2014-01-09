@@ -2,7 +2,9 @@ package interaction;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-
+/**
+ * Interface de duels
+ */
 public interface  IDuel {
 	
 	/**
